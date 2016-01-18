@@ -1,0 +1,49 @@
+{% extends "admin.layout.twig" %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-9">
+            <form action="/admin/edit-article" method="POST" >
+                <input type="hidden" name="article[id]" id="article_id" value="{{article.id}}" /> <br />
+                <label for="article_title">Titlu</label>
+                <input type="text" name="article[title]" id="article_title" value="{{article.title}}" /> <br />
+
+                <label for="article_slug">URL</label>
+                <input type="text" name="article[slug]" id="article_slug" value="{{article.slug}}" /> <br />
+
+                <label for="article_author">Autor</label>
+                <input type="text" name="article[author]" id="article_author" value="{{article.author}}" /> <br />
+
+                <label for="article_body">Continut</label>
+                <textarea type="text" name="article[body]" id="article_body" >{{article.body}}</textarea> <br />
+
+                <fieldset> 
+                    <label for="">categorii</label> <br />
+                    {% for category in categories %} 
+                        <label for="article_categories_{{category.id}}">{{category.title}}</label> 
+                        <input type="checkbox" name="article[categories][{{category.id}}]" id="article_categories_{{category.id}}" {{article.hasCategory(category.id) ? 'checked="checked"' : ''}} />   <br />
+                    {% endfor %}
+                </fieldset>
+                <fieldset>
+                    <input type="submit" value="salveaza" />
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="col-sm-3">
+            <span class="info">Info:</span>
+            <ul>
+                <li><b>URL</b>: link catre articol,
+                    este generat automat din titlu.</li>
+                <li><a href="/admin/articles">Lista articole</a></li>
+            </ul>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            tinymce.init({selector: '#article_body'});
+        });
+    </script>
+{% endblock %}

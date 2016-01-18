@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Scoala Gimnaziala Christiana{% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href='https://fonts.googleapis.com/css?family=Merienda+One|Open+Sans:400,300,600italic|Oswald' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/bootstrap.theme.css">
+
+        {% if cssFiles is defined %}
+            {% for cssFile in cssFiles  %}
+                <link rel="stylesheet" href="{{ cssFile }}">
+            {% endfor %}
+        {% endif %}
+
+    </head>
+    <body>
+        <div class="container">
+            <header>
+
+                <div class="container-fluid container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/"><img src="/img/logo.png" alt="house luxury" width="252" height="51" /></a>
+                    </div>
+                    <div class="navbar-motto">
+                        Dezvoltăm Comunitatea
+                    </div>
+
+
+                </div>
+
+                {% if carousel is defined  %}
+                    {{ include('layers/carousel.twig') }}
+                {% endif %}
+            </header>
+
+            <div class="container-fluid row">
+                <div class="col-sm-3">
+                    {{ include('layers/menu.twig') }}
+                </div>
+                <div class="col-sm-7">
+                    {% block content %}
+                        Pagina in constructie
+                    {% endblock %}
+                </div>
+                <div class="col-sm-2">
+                    {{ include('layers/news.twig') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {{ include('layers/footer.twig') }}
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>        
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>     
+    {% if jsFiles is defined %}
+        {% for jsFile in jsFiles %}
+            <script src="{{ jsFile }}"></script>     
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

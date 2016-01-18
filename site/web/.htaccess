@@ -1,0 +1,21 @@
+
+SetEnv PHP_WEB_DB_NAME sgc_web
+SetEnv PHP_WEB_DB_USERNAME webadmin
+SetEnv PHP_WEB_DB_PASSWORD webadmin
+
+RewriteEngine On
+
+#RewriteBase /
+# don't rewrite assets
+RewriteRule ^((css|js|img|fancybox)/.*)$ - [L]
+RewriteRule ^favicon.ico$ - [L]
+RewriteRule ^google26e71bcfa78a0bcd.html$ - [L]
+RewriteCond %{HTTP:Authorization} ^(.+)$
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+#don't rewrite index.php
+RewriteRule index\.php - [L]
+
+#send all other traffic to index.php
+RewriteRule ^(.*)$ index.php/$1 [QSA,L]
+

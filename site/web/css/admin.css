@@ -1,0 +1,9 @@
+.admin_container {
+    width: 1200px;
+    margin:20px auto;
+}
+
+.form_container {
+    width:800px;
+    padding: 20px;
+}

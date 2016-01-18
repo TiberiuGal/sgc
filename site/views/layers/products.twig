@@ -1,0 +1,77 @@
+
+<div class="container products_header spacing-top-large spacing-bottom-small">
+    <div class="row-fixed" data-widget="row">
+
+        <div class="row">
+            <div class="col-sm-12" data-container="container">
+                <p class="best_offers">Ofertele Noastre</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row-fixed" data-widget="row">
+    <div class="container-fluid">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-sm-3" data-container="container">
+                    <div  data-preset="default" data-spacing="sasa" data-widget="image" data-align="center">
+
+
+                        <div >
+                            <a href="/produse/{{product.slug}}" >
+                            <img src="{{product.img_src}}" width="270" height="170" data-id="88" title="" alt="{{product.img_alt}}">
+                            </a>
+                        </div>
+
+                    </div>
+                    <div >
+                        <div >
+                            <p style="text-align: center;" >{{ product.title }}</p>
+                        </div>
+                    </div>
+                    <div  data-widget="text" data-preset="default" data-spacing="sasa">
+                        <div >
+                            <p  style="text-align: center;">{{ product.excerpt }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="    " data-widget="divider_horizontal" data-divider-type="horizontal" data-preset="default" data-align="center" data-spacing="sasa" data-width="58">
+                        <hr style="width: 58%;" >
+                    </div>
+                    
+                    <div  class="spacing-bottom-small" data-widget="button" data-preset="2" data-align="center" data-spacing="sasa">
+                        <a href="/produse/{{product.slug}}" >
+                        <div >
+                            <p  style="text-align: center;">{{ product.price |number_format}} &euro;</p> 
+                            <p  style="text-align: center;"> vezi detalii </p> 
+                        </div>     
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+            
+            {% if showMore|default(false) %}
+                 <div class="col-sm-3" data-container="container">
+                    <div  data-preset="default" data-spacing="sasa" data-widget="image" data-align="center">
+
+
+                        <div >
+                            <img src="{{showMore.img_src}}" width="270" height="170" data-id="88" title="" alt="{{showMore.img_alt}}">
+                        </div>
+
+                    </div>
+                <div  class="spacing-bottom-small" data-widget="button" data-preset="2" data-align="center" data-spacing="sasa">
+                        <a href="/produse" >
+                        <div >
+                            
+                            <p  style="text-align: center;"> vezi toate ofertele </p> 
+                        </div>     
+                        </a>
+                </div>
+                 </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

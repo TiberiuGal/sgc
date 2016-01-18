@@ -1,0 +1,20 @@
+{% extends "admin.layout.twig" %}
+
+{% block content %}
+    <h2>lista articole:</h2>
+    <a href="add-article" class="btn default">adauga articol</a>
+    <table>
+        <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{article.id}}</td>
+                    <td>{{article.title}}</td>
+                    <td>{{article.slug}}</td>
+                    <td>{{article.excerpt}}</td>
+                    <td>{{article.categories | join(', ')}}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}                

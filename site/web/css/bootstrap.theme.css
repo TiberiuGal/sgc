@@ -1,0 +1,182 @@
+body {
+    background-color: #FAF7EE;
+}
+
+header .container-fluid {
+    height: 80px;
+}
+header {
+    margin-bottom: 30px;
+}
+
+.navbar-brand {
+    margin: 4px 10px;
+}
+.navbar-motto {
+    float: left;
+    font-family: 'Merienda One', cursive;
+    font-size: 34px;
+    margin: 15px 50px;
+    color: #8B1B13;
+}
+
+
+
+.carousel {
+
+    max-height: 500px;
+    overflow: hidden;
+}
+.carousel-caption {
+
+    font-family:'Merienda One', cursive;
+    font-size: 16px;
+    position: absolute;
+    text-align: left;
+    vertical-align: middle;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    width: 50%;
+    height: 100%;
+    background: rgba(127,53,12,0.6);
+
+}
+.carousel-caption span {
+
+    display: block;
+    color: #fff;
+    font-size: 47px;
+    padding: 290px 100px 120px 100px;
+    vertical-align: middle;
+}
+.carousel-indicators {
+    bottom: 10px;
+}
+
+p.best_offers {
+  text-align: center;
+  font-weight: 400;
+  font-style: normal;
+  font-family: Roboto, sans-serif;
+  color: #5e5e5e;
+  font-size: 72px;
+  line-height: 1.2;
+  letter-spacing: 0px;
+
+}
+.about_us_layer {
+    color: #FFFFFF;
+    background-color:#2b2b2b;
+    background-image:url('/img/mt-0031-home-bg1.jpg');
+    background-size:cover;
+    background-position:center center;background-repeat:no-repeat;
+}
+.latest_news_header {
+    margin-bottom: 20px;
+}
+.latest_news hr {
+    margin:0px;
+}
+.latest_news_header p {
+  font-weight: 400;
+  font-style: normal;
+  font-family: 'Oswald', sans-serif;
+  color: #5e5e5e;
+  font-size: 17px;
+}
+
+.latest_news .date {
+  font-weight: 400;
+  font-style: normal;
+  font-family: 'Oswald', sans-serif;
+  color: #27b6de;
+  font-size: 14px;  
+}
+
+.spacing-bottom-small {
+    padding-bottom: 20px;
+}
+.spacing-bottom-large {
+    padding-bottom: 90px;
+}
+.spacing-top-large {
+    padding-top: 90px;
+}
+
+.spacing-top-normal-even {
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.about_us_header p {
+  text-transform: uppercase;
+  font-weight: 400;
+  font-style: normal;
+  font-family: Roboto, sans-serif;
+  color: #5e5e5e;
+  font-size: 47px;
+  line-height: 1.2;
+  letter-spacing: 0px;
+}
+
+.about_us_text {
+    font-size: 17px;
+    line-height: 30px;
+}
+
+.about_us_text_small {
+    font-size: 15px;
+    line-height: 22px;
+    margin-top: 137px;
+}
+
+.products_header p {
+    text-transform: uppercase;
+  font-weight: bold;
+  font-style: normal;
+  font-family: Roboto, sans-serif;
+  color: #5e5e5e;
+  font-size: 62px;
+  line-height: 1.2;
+  letter-spacing: 0px;
+}
+.product_title {
+      text-transform: uppercase;
+  font-weight: bold;
+  font-style: normal;
+  font-family: Roboto, sans-serif;
+  color: #5e5e5e;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: 0px;
+}
+.modal {
+	overflow: auto;
+	color: #333;
+}
+
+.contact_background {
+    height: 700px;
+    background:url('/img/contact_form_bg_bw.jpg') no-repeat bottom;   
+}
+
+.price_big {
+    font-size: 36px;
+    font-family: Robot, sans-serif;
+    text-align: center;  
+    margin: 20px;
+    color: #008080;
+}
+
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout-info {
+    border-left-color: #008080;
+}
