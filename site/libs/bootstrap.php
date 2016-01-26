@@ -62,3 +62,7 @@ $app->get('/admin/articles', 'controllers\AdminController::articlesAction');
 $app->get('/admin/', 'controllers\AdminController::indexAction');
 $app->get('/admin/edit-article/{articleId}', 'controllers\AdminController::editArticleAction');
 $app->post('/admin/edit-article', 'controllers\AdminController::saveArticleAction');
+$app->get('/admin/edit-menu/{menuId}', 'controllers\AdminController::editMenuAction');
+$app->get('/admin/edit-menu', 'controllers\AdminController::editMenu2Action');
+$app->post('/admin/menu_save', 'controllers\AdminController::menuSaveAction');
+

@@ -1,0 +1,16 @@
+<ul>
+    {% for menuItem in menu.items %} 
+        <li  data-jstree='{"opened":true}'>
+
+            <label data-item-id="{{menuItem.id}}" data-item-link="{{menuItem.link}}">{{menuItem.title}}</label>
+            
+            {% if menuItem.items is defined %}
+
+                {% include "admin/_menu_item.twig" with {'menu': menuItem}  only %}
+
+            {%endif%}
+
+        </li>
+
+    {% endfor %}
+</ul>

@@ -1,0 +1,63 @@
+
+{% extends "admin.layout.twig" %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-9">
+            <div id="tree_menu">
+
+                {% include "admin/_menu_item.twig"  %}
+
+            </div>
+                <div class="item_editor">
+                    <label for="title">titlu:</label><input type="text" name="title" id="new_item_title" /> <br />
+                    <label for="link">pagina:</label><input type="text" name="link" id="new_item_link" /> <br />
+                    <button id="add_new">Adauga</button>
+                </div>
+                <div class="tree_controls">
+                    <button id="save_tree">Salveaza</button>
+                </div>
+        </div>
+        <div class="col-sm-3">
+            <span class="info">Info:</span>
+            editare: <b>{{menu.title}}</b>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var nextId = {{nextId}};
+            $('#tree_menu').jstree({
+                "core": {
+                    "check_callback": true
+                },
+                "plugins": ["dnd"]
+            });
+            $('#add_new').click(function(){
+                $('#tree_menu').jstree().create_node(null, 
+                {'text': '<label class="menuitem title" data-item-id="'+nextId+'" data-item-link="'+$('#new_item_link').val()+'">'+$('#new_item_title').val()+'</label>'}, 'last');
+                
+               
+                nextId++;
+                $('#new_item_title').val('');
+                $('#new_item_link').val('');
+            });
+            $('#save_tree').click(function(){
+               var nodes = $('#tree_menu').jstree().get_json();
+               var nodeData = {'data':nodes};
+               
+               $.ajax({
+                   'url': '/admin/menu_save',
+                   'method': 'post',
+                   'data': nodeData
+               });
+                   
+            });
+            function parseTreeItem(node) {
+                var item = {};
+                
+            }
+        });
+        
+    </script>
+{% endblock %}
