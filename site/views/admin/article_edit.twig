@@ -3,8 +3,8 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-9">
-            <form action="/admin/edit-article" method="POST" >
+        <div class="col-sm-9 article">
+            <form action="/admin/article/{{article.id}}" method="POST" >
                 <input type="hidden" name="article[id]" id="article_id" value="{{article.id}}" /> <br />
                 <label for="article_title">Titlu</label>
                 <input type="text" name="article[title]" id="article_title" value="{{article.title}}" /> <br />
@@ -16,8 +16,11 @@
                 <input type="text" name="article[author]" id="article_author" value="{{article.author}}" /> <br />
 
                 <label for="article_body">Continut</label>
-                <textarea type="text" name="article[body]" id="article_body" >{{article.body}}</textarea> <br />
-
+                <textarea type="text" name="article[body]" id="article_body" rows="40" >{{article.body}}</textarea> <br />
+                
+                <label for="article_excerpt">Pe scurt</label>
+                <textarea type="text" name="article[excerpt]" id="article_body" rows="5" >{{article.excerpt}}</textarea> <br />
+                
                 <fieldset> 
                     <label for="">categorii</label> <br />
                     {% for category in categories %} 
@@ -43,7 +46,17 @@
     </div>
     <script>
         $(document).ready(function () {
-            tinymce.init({selector: '#article_body'});
+            tinymce.init({
+                selector: '#article_body',
+                browser_spellcheck: true,
+                plugins: 'advlist autolink link image lists charmap print preview pagebreak visualblocks visualchars wordcount media code jbimages fullscreen',
+                pagebreak_separator: "<!-- my page break -->",
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image jbimages media | fullscreen  preview",
+                image_advtab: true,
+                 autoresize_max_height: 500,
+                 autoresize_on_init: true
+            });
         });
     </script>
 {% endblock %}
+

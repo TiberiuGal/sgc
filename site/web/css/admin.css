@@ -7,3 +7,19 @@
     width:800px;
     padding: 20px;
 }
+table.table th {
+    line-height: 32px;
+    background-color: #d1edff;
+    color: #333;
+    min-width: 44px;
+}
+
+span.link {
+    color:#333;
+    font-size: 11px;
+    font-family: monospace;
+    background-color: beige;
+    padding: 2px;
+    border: 1px solid bisque;
+    border-radius: 3px;
+}

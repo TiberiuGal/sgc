@@ -14,19 +14,18 @@ class IndexController {
 
     public function indexAction(Request $request, Application $app) {
         $carousel = new \CarouselService();
-
+        $data = $app['menu']->getData();
+        
         return $app['twig']->render('index.twig', array(
                     'carousel' => $carousel->getData(),
-                   
-        ));
-    }
-    
-    public function aboutAction(Request $request, Application $app) {
-     
-        return $app['twig']->render('despre.twig', array(
-                    
+                    'menu' => $data
         ));
     }
 
-    
+    public function aboutAction(Request $request, Application $app) {
+
+        return $app['twig']->render('despre.twig', array(
+        ));
+    }
+
 }

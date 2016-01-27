@@ -26,11 +26,11 @@
     </div>
     <script>
         $(document).ready(function () {
-            var jsonData = Json.parse({{data|json_encode|e('js')}});
+            //var jsonData = JSON.parse();
             $('#tree_menu').jstree({
                 "core": {
                     "check_callback": true,
-                    "data": {{data}}
+                    "data": {{data|json_encode|raw}}
                 },
                 "plugins": ["dnd"]
             });

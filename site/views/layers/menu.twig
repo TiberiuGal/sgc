@@ -1,22 +1,2 @@
 {# empty Twig template #}
-<ul>
-    <li><a href="">Despre Noi</a></li>
-    <li><a href="">Organizare</a></li>
-    <li><a href="">Curanti</a>
-
-        <ul>
-            <li><a href="">Submeniu 1</a></li>
-            <li><a href="">Submeniu 2</a></li>
-        </ul>
-    </li>
-    <li><a href="">Cadre Didactice</a></li>
-    <li><a href="">Resurse</a>
-
-        <ul>
-            <li><a href="">Submeniu 1</a></li>
-            <li><a href="">Submeniu 2</a></li>
-        </ul>
-    </li>
-    <li><a href="">Contact</a></li>
-
-</ul>
+  {% include "layers/_menu_item.twig" with {'menu': menu}  only %}

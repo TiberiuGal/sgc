@@ -14,27 +14,39 @@ class ArticleModel {
     public $excerpt;
     public $created_at;
     public $categories;
+    public $published;
+    public $publish_date;
 
     public static function getById($pdo, $id) {
         $row = $pdo->query(" select a.* from articles a where id = $id");
         return new ArticleModel($pdo, $row->fetch($pdo::FETCH_ASSOC));
     }
 
-    public static function createFromData($pdo , $data){
+    public static function getBySlug($pdo, $slug) {
         
+        $stmt = $pdo->prepare(" select a.* from articles a where slug = :slug");
+        $stmt->execute(array('slug' => $slug));
+        if (!$stmt->rowCount()) {
+            throw new \Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException($slug);
+        }
+        return new ArticleModel($pdo, $stmt->fetch($pdo::FETCH_ASSOC));
+    }
+
+    public static function createFromData($pdo, $data) {
+
         $obj = new ArticleModel($pdo);
-        
+
         $obj->load($data);
         return $obj;
     }
-    
-    protected  function load($data){
+
+    protected function load($data) {
         $this->data = $data;
         foreach ($this->data as $key => $val) {
             $this->$key = $val;
         }
     }
-    
+
     public function __construct($pdo = null, $data = null) {
         $this->pdo = $pdo;
         if (empty($data)) {
@@ -43,7 +55,6 @@ class ArticleModel {
         $this->load($data);
         $this->_setCategories();
     }
-    
 
     function __get($name) {
 
@@ -77,13 +88,15 @@ class ArticleModel {
                 title = :title,
                 slug = :slug,
                 body = :body,
-                author = :author
+                author = :author,
+                excerpt = :excerpt
                 where id = :id
                 ");
         $stmt->execute(array('title' => $this->title,
             'slug' => $this->slug,
             'body' => $this->body,
-            'author' => $this->author,
+            'author' => $this->author,            
+            'excerpt' => $this->excerpt,
             'id' => $this->id
         ));
         $this->updateCategories();
@@ -94,12 +107,14 @@ class ArticleModel {
                 title = :title,
                 slug = :slug,
                 body = :body,
-                author = :author 
+                author = :author,
+                excerpt = :excerpt
                 ");
         $stmt->execute(array('title' => $this->title,
             'slug' => $this->slug,
             'body' => $this->body,
-            'author' => $this->author
+            'author' => $this->author,
+            'excerpt' => $this->excerpt
         ));
 
 

@@ -1,0 +1,16 @@
+<ul>
+    {% for menuItem in menu.items %} 
+        <li >
+
+            <a href="{{menuItem.link}}">{{menuItem.title}}</a>
+            
+            {% if menuItem.items is defined %}
+
+                {% include "layers/_menu_item.twig" with {'menu': menuItem}  only %}
+
+            {%endif%}
+
+        </li>
+
+    {% endfor %}
+</ul>
