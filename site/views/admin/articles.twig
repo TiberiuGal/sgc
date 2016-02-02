@@ -28,7 +28,7 @@
                     <td>{{article.categories | join(', ')}}</td>
                     <td>
                         <a href="/admin/article/{{article.id}}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i> | edit </a>
-                        <a href="/admin/article/{{article.id}}?add_to_menu=1" class="btn btn-default btn-xs" title="adauga pagina in meniu"><i class="glyphicon glyphicon-list-alt"></i> | meniu </a>
+                        <a href="/admin/article/{{article.id}}/add_to_menu" class="btn btn-default btn-xs" title="adauga pagina in meniu"><i class="glyphicon glyphicon-list-alt"></i> | meniu </a>
                     </td>
                 </tr>
             {% endfor %}

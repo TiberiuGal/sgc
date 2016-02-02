@@ -59,11 +59,11 @@ class AdminController {
     public function editMenuAction($menuId, Request $request, Application $app) {
         $pdo = $app['db.pdo'];
         $menu = FlatMenuModel::getById($pdo, $menuId);
-        /*$res = $pdo->query("select a.* from articles a join articles_categories i on a.id = i.article_id where i.category_id = 1 ");
-        $articles = array();
-        foreach ($res as $row) {
-            $articles[] = new ArticleModel($pdo, $row);
-        }*/
+        /* $res = $pdo->query("select a.* from articles a join articles_categories i on a.id = i.article_id where i.category_id = 1 ");
+          $articles = array();
+          foreach ($res as $row) {
+          $articles[] = new ArticleModel($pdo, $row);
+          } */
 
         return $app['twig']->render('admin/menu_edit.twig', array(
                     'jsFiles' => array('/js/jstree/jstree.js', '/js/jstree/jstree.dnd.js'),
@@ -91,28 +91,27 @@ class AdminController {
     public function menuSaveAction($menuId, Request $request, Application $app) {
 
         $data = $request->get('data');
-        
+
         $pdo = $app['db.pdo'];
-        
+
         $stmt = $pdo->prepare("replace into menu_items "
-         
                 . " (title, link, parent, sort_index, menu_id)"
                 . " values(:title, :link, :parent, :sort_index,:menu_id ) "
                 . " where id = :id ");
-                
-        
-        foreach($data as $ix=>$row) {
-            $params = array('menu_id'=>$menuId,
-                    'sort_index' => $ix,
-                    'title'=>$row['text'],
-                    'link'=>$row['data']['slug'],
-                    'parent'=>$row['parent'],
-                    'id'=> $row['id']
-                    );
-        
+
+
+        foreach ($data as $ix => $row) {
+            $params = array('menu_id' => $menuId,
+                'sort_index' => $ix,
+                'title' => $row['text'],
+                'link' => $row['data']['slug'],
+                'parent' => $row['parent'],
+                'id' => $row['id']
+            );
+
             $stmt->execute($params);
         }
-        
+
         return "ok";
     }
 
@@ -139,6 +138,30 @@ class AdminController {
         return ' <script language="javascript" type="text/javascript">
                 window.parent.window.jbImagesDialog.uploadFinish(' . json_encode($returnObj) . ' );
             </script>';
+    }
+
+    public function updateArticleAction($articleId, $action, Request $request, Application $app) {
+        switch ($action) {
+            case 'add_to_menu':
+                $menuId = 1;
+                return $this->addArticleToMenu($articleId, $menuId, $app);
+                break;
+        }
+    }
+
+    protected function addArticleToMenu($articleId, $menuId, Application $app) {
+        $pdo = $app['db.pdo'];
+        $article = ArticleModel::getById($pdo, $articleId);
+        $stmt = $pdo->prepare("insert into menu_items (title, link, menu_id, sort_index) values( :title, :link, :menu_id, :sort_index ) ");
+        $nextSortIndex = $pdo->query("select count(id) as sort_index from menu_items where menu_id = $menuId ")->fetch();
+        $res = $stmt->execute(array(
+            'title' => $article->title,
+            'link' => $article->slug,
+            'menu_id' => $menuId,
+            'sort_index' => $nextSortIndex['sort_index']
+        ));
+        
+        return $app->redirect('/admin/menu/' . $menuId);
     }
 
 }
