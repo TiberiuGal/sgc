@@ -16,8 +16,8 @@ use models\MenuModel;
  */
 class AdminController {
 
-    public function indexAction(Request $request) {
-        $request->redirect('/admin/articole');
+    public function indexAction(Request $request, Application $app) {
+        return $app['twig']->render('admin/dashboard.twig', array());
     }
 
     public function articlesAction(Request $request, Application $app) {
@@ -59,17 +59,17 @@ class AdminController {
     public function editMenuAction($menuId, Request $request, Application $app) {
         $pdo = $app['db.pdo'];
         $menu = FlatMenuModel::getById($pdo, $menuId);
-        $res = $pdo->query("select a.* from articles a join articles_categories i on a.id = i.article_id where i.category_id = 1 ");
+        /*$res = $pdo->query("select a.* from articles a join articles_categories i on a.id = i.article_id where i.category_id = 1 ");
         $articles = array();
         foreach ($res as $row) {
             $articles[] = new ArticleModel($pdo, $row);
-        }
+        }*/
 
         return $app['twig']->render('admin/menu_edit.twig', array(
                     'jsFiles' => array('/js/jstree/jstree.js', '/js/jstree/jstree.dnd.js'),
                     'cssFiles' => array('/js/jstree/themes/default/style.css'),
                     'menuData' => $menu->toJson(),
-                    'nextId' => $menu->getNextId(),
+                    'menuId' => $menuId,
                     'articles' => $articles
         ));
     }
@@ -88,12 +88,31 @@ class AdminController {
         );
     }
 
-    public function menuSaveAction(Request $request, Application $app) {
+    public function menuSaveAction($menuId, Request $request, Application $app) {
 
-        $j = json_encode($request->get('data'));
+        $data = $request->get('data');
+        
         $pdo = $app['db.pdo'];
-        $st = $pdo->prepare(" update site_configs set key_value = :val where key_name = :key ");
-        $st->execute(array('val' => $j, 'key' => 'main_menu'));
+        
+        $stmt = $pdo->prepare("replace into menu_items "
+         
+                . " (title, link, parent, sort_index, menu_id)"
+                . " values(:title, :link, :parent, :sort_index,:menu_id ) "
+                . " where id = :id ");
+                
+        
+        foreach($data as $ix=>$row) {
+            $params = array('menu_id'=>$menuId,
+                    'sort_index' => $ix,
+                    'title'=>$row['text'],
+                    'link'=>$row['data']['slug'],
+                    'parent'=>$row['parent'],
+                    'id'=> $row['id']
+                    );
+        
+            $stmt->execute($params);
+        }
+        
         return "ok";
     }
 

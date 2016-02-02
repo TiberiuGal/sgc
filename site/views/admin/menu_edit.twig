@@ -14,20 +14,7 @@
                 <button id="save_tree">Salveaza</button>
             </div>
 
-            <div class="">
-                <div class="item_editor">
-                    <label for="title">titlu:</label><input type="text" name="title" id="new_item_title" /> <br />
-                    <label for="link">pagina:</label><input type="text" name="link" id="new_item_link" /> <br />
-                    <button id="add_new">Adauga</button>
-                </div>
-                <div class="articles"  >
-                    {% for article in articles %}
-                        <div data-article-id="{{article.id}}" data-article-slug="{{article.slug}}"> {{article.title}} </div>
 
-
-                    {% endfor %}
-                </div>
-            </div>
 
         </div>
         <div class="col-sm-3">
@@ -36,25 +23,28 @@
         </div>
     </div>
     <script>
+        var menuId = {{menuId}}
         $(document).ready(function () {
-        var nextId = {{nextId}};
-                $('#tree_menu').jstree({
-        "core": {
+            
+            $('#tree_menu').jstree({
+            "core": {
 
-        "data":{{menuData|raw}}
-        },
-                "plugins": ["dnd"]
+            "data":{{menuData|raw}}
+            },
+                    "plugins": ["dnd"]
 
-        }
-        );
-                $('#save_tree').click(function(){
-        var nodes = $('#tree_menu').jstree().get_json(null, {"flat": true});
-                var nodeData = {'data':nodes};
-                $.ajax({
-                'url': '/admin/menu_save',
-                        'method': 'post',
-                        'data': nodeData
-                });
+            } );
+            setTimeout(function( ){ $('#tree_menu').jstree().open_all(); }, 300);
+       
+
+        $('#save_tree').click(function () {
+            var nodes = $('#tree_menu').jstree().get_json(null, {"flat": true});
+            var nodeData = {'data': nodes};
+            $.ajax({
+                'url': '/admin/menu/' + menuId,
+                'method': 'post',
+                'data': nodeData
+            });
         });
         });
 

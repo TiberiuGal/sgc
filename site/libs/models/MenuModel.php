@@ -46,7 +46,7 @@ class MenuModel {
                 'text' => $item['title'],
                 'parent' => $item['parent'] ? $item['parent'] : '#',
                 'data'=> array(
-                    'slug'=>$item['slug']
+                    'slug'=>$item['link']
                 )
             );
         }

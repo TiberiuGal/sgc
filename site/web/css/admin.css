@@ -23,3 +23,31 @@ span.link {
     border: 1px solid bisque;
     border-radius: 3px;
 }
+textarea {
+    width:100%;
+}
+.save_panel{
+    position: fixed;
+    bottom: 0px;
+    /* margin: 0px 0px 30px 0px; */
+    border: 1px solid cadetblue;
+    width: 891px;
+    padding: 10px;
+    background: cadetblue;
+}
+
+.article_meta{
+    width: 600px;
+    float:left;
+}
+.article_categories {
+    width:200px; 
+    float:right;
+}
+.article_meta input {
+    width: 300px;
+}
+.article_meta label, .article_categories label {
+    width: 100px;
+    padding: 0px 3px;
+}
