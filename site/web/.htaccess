@@ -2,14 +2,15 @@
 SetEnv PHP_WEB_DB_NAME sgc_web
 SetEnv PHP_WEB_DB_USERNAME webadmin
 SetEnv PHP_WEB_DB_PASSWORD webadmin
+SetEnv PHP_WEB_ADMIN_USER admin
+SetEnv PHP_WEB_ADMIN_PASS nhDr7OyKlXQju+Ge/WKGrPQ9lPBSUFfpK+B1xqx/+8zLZqRNX0+5G1zBQklXUFy86lCpkAofsExlXiorUcKSNQ==
 
 RewriteEngine On
 
 #RewriteBase /
 # don't rewrite assets
-RewriteRule ^((css|js|img|fancybox)/.*)$ - [L]
+RewriteRule ^((css|js|img|fancybox|resources)/.*)$ - [L]
 RewriteRule ^favicon.ico$ - [L]
-RewriteRule ^google26e71bcfa78a0bcd.html$ - [L]
 RewriteCond %{HTTP:Authorization} ^(.+)$
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 

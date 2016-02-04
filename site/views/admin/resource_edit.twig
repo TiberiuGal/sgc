@@ -1,0 +1,25 @@
+{% extends "admin.layout.twig" %}
+
+
+{% block content %}
+
+    <div class="col-sm-9 resource">
+        <form action="/admin/resource/{{resource.id}}" method="POST" enctype="multipart/form-data">
+            
+            <label for="resource_title">Titlu</label> <input type="text" name="resource[title]" id="resource_title" value="{{resource.title}}" /> <br/>
+            <label for="resource_description">Descriere</label> <textarea name="resource[description]" id="resource_description" >{{resource.description}}</textarea> <br/>
+            <label for="resource_file">Fisier</label>
+            {%if resource.file_name %}
+                <div class="resource_file">{{resource.file_name}}</div>
+                {%else%}
+                    <input type="file" name="userfile" id="resource_file" />
+                {%endif%}
+                <div>
+                    <button>Salveaza</button>
+                </div>
+        </form>
+    </div>
+    <div class="col-sm-3">
+
+    </div>
+{% endblock %}

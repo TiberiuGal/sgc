@@ -1,0 +1,39 @@
+{% extends "admin.layout.twig" %}
+
+
+{% block content %}
+
+     
+    <table class="table table-striped table-hover">
+        
+        <thead >
+            <tr><th colspan="5">lista resurse:</th><th><a href="/admin/resource/0" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-plus"></i> | adauga resursa </a></th></tr>
+            <tr>
+                <th width="20">id</th>
+                <th width="200">titlu</th>
+                <th>descriere</th>
+                <th>fisier</th>
+                <th>tip</th>
+                <th width="120">actiuni</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for resource in resources %}
+                <tr>
+                    <td>{{resource.id}}</td>
+                    <td>{{resource.title}} </td>
+                    <td>{{resource.description}}</td>
+                    <td>{{resource.file_name }} ( {{resource.file_size}} )</td>
+                    <td>
+                        <a href="/admin/resource/{{resource.id}}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i> | edit </a>
+                        <a href="/admin/resource/{{resource.id}}/delete" class="btn btn-error btn-xs jst_confirm" ><i class="glyphicon glyphicon-delete"></i> | sterge </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+            
+            
+{% endblock %}

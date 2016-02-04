@@ -8,6 +8,8 @@ use models\ArticleModel;
 use models\CategoryModel;
 use models\FlatMenuModel;
 use models\MenuModel;
+use models\ResourceModel;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 /**
  * Description of IndexController
@@ -17,7 +19,21 @@ use models\MenuModel;
 class AdminController {
 
     public function indexAction(Request $request, Application $app) {
-        return $app['twig']->render('admin/dashboard.twig', array());
+        $params = array('password' => null, 'encodedPassword' => null);
+
+        if (( $password = $request->getSession()->get('password', null))) {
+            $params['password'] = $password;
+            $encoder = new MessageDigestPasswordEncoder();
+            $params['encodedPassword'] = $encoder->encodePassword($password, '');
+            $request->getSession()->remove('password');
+        }
+
+        return $app['twig']->render('admin/dashboard.twig', $params);
+    }
+
+    public function encodePasswordAction(Request $request, Application $app) {
+        $request->getSession()->set('password', $request->get('password'));
+        return $app->redirect('/admin/');
     }
 
     public function articlesAction(Request $request, Application $app) {
@@ -72,20 +88,6 @@ class AdminController {
                     'menuId' => $menuId,
                     'articles' => $articles
         ));
-    }
-
-    public function editMenu2Action(Request $request, Application $app) {
-        $pdo = $app['db.pdo'];
-        $data = $pdo->query("select key_value from site_configs where key_name='main_menu'")->fetch();
-        $jsonData = json_decode($data['key_value']);
-        foreach ($jsonData as $key => $val) {
-            $jsonData[$key]->data = array("ita" => 2, 'rnd' => rand(3, 10));
-        }
-        return $app['twig']->render('admin/menu_edit2.twig', array(
-                    'jsFiles' => array('/js/jstree/jstree.js', '/js/jstree/jstree.dnd.js'),
-                    'cssFiles' => array('/js/jstree/themes/default/style.css'),
-                    'data' => $jsonData)
-        );
     }
 
     public function menuSaveAction($menuId, Request $request, Application $app) {
@@ -160,8 +162,86 @@ class AdminController {
             'menu_id' => $menuId,
             'sort_index' => $nextSortIndex['sort_index']
         ));
-        
+
         return $app->redirect('/admin/menu/' . $menuId);
+    }
+
+    public function uploadResourceAction(Request $request, Application $app) {
+        $file = $request->files->get('userfile');
+        $mediaDir = '/resources/';
+        $path = __DIR__ . '/../web' . $mediaDir;
+        $filename = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+
+        $file->move($path, $filename);
+        return array($file, $filename, filesize($path . $filename));
+    }
+
+    public function resourcesAction(Request $request, Application $app) {
+        $pdo = $app['db.pdo'];
+
+        $res = $pdo->query("select * from resources  ");
+        $rows = array();
+        while (($row = $res->fetchObject('\models\ResourceModel'))) {
+            $rows[] = $row;
+        }
+
+        return $app['twig']->render('admin/resources.twig', array(
+                    'jsFiles' => array('/js/admin.js'),
+                    'resources' => $rows
+        ));
+    }
+
+    public function resourceAction($resourceId, Request $request, Application $app) {
+        if ($resourceId) {
+            $pdo = $app['db.pdo'];
+            $stmt = $pdo->prepare("select * from resources where id = :id ");
+            $stmt->execute(array('id' => $resourceId));
+            $resource = $stmt->fetchObject('\models\ResourceModel');
+        } else {
+            $resource = new ResourceModel();
+        }
+
+        return $app['twig']->render('admin/resource_edit.twig', array(
+                    'jsFiles' => array('/js/admin.js'),
+                    'resource' => $resource
+        ));
+    }
+
+    public function saveResourceAction($resourceId, Request $request, Application $app) {
+        $pdo = $app['db.pdo'];
+
+        $params = $request->request->get('resource');
+        
+        $sqlString = " resources set ";
+
+        if (!empty($request->files)) {
+
+
+            $fileData = $this->uploadResourceAction($request, $app);
+            $file = $fileData[0];
+            $name = $fileData[1];
+            $size = $fileData[2];
+            $params['file_name'] = $name;
+            $params['file_type'] = $file->getClientOriginalExtension();
+            $params['file_size'] = $size;
+        }
+        $keys = array_keys($params);
+        $sqlString .= implode(' , ', array_map(function($key) {
+                    return "{$key} = :{$key}";
+                }, $keys));
+
+        if ($resourceId) {
+            $params['id'] = $resourceId;
+            $sqlString = 'UPDATE ' . $sqlString . ' where id = :id ';
+        } else {
+            $sqlString = 'INSERT into ' . $sqlString;
+        }
+
+
+        $stmt = $pdo->prepare($sqlString);
+        $res = $stmt->execute($params);
+        
+        return $app->redirect('/admin/resources');
     }
 
 }

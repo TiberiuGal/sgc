@@ -1,1 +1,16 @@
 {% extends "admin.layout.twig" %}
+
+{% block content %}
+    <div class="row">
+        <h2>Tools:</h2>
+        <div>
+            <p>Admin password generator</p>
+            <form action="/admin/encode_password" method="post">
+                <input type="text" name="password" value="{{password}}" placeholder="parola" />
+                <input type="submit" value="encode password" />
+            </form>
+                
+                <div class="password_encoded"> <span>parola encodata:</span> {{encodedPassword}}</div>
+        </div>
+    </div>
+    {% endblock %}
