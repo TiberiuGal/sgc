@@ -55,14 +55,14 @@ header {
 }
 
 p.best_offers {
-  text-align: center;
-  font-weight: 400;
-  font-style: normal;
-  font-family: Roboto, sans-serif;
-  color: #5e5e5e;
-  font-size: 72px;
-  line-height: 1.2;
-  letter-spacing: 0px;
+    text-align: center;
+    font-weight: 400;
+    font-style: normal;
+    font-family: Roboto, sans-serif;
+    color: #5e5e5e;
+    font-size: 72px;
+    line-height: 1.2;
+    letter-spacing: 0px;
 
 }
 .about_us_layer {
@@ -79,19 +79,19 @@ p.best_offers {
     margin:0px;
 }
 .latest_news_header p {
-  font-weight: 400;
-  font-style: normal;
-  font-family: 'Oswald', sans-serif;
-  color: #5e5e5e;
-  font-size: 17px;
+    font-weight: 400;
+    font-style: normal;
+    font-family: 'Oswald', sans-serif;
+    color: #5e5e5e;
+    font-size: 17px;
 }
 
 .latest_news .date {
-  font-weight: 400;
-  font-style: normal;
-  font-family: 'Oswald', sans-serif;
-  color: #27b6de;
-  font-size: 14px;  
+    font-weight: 400;
+    font-style: normal;
+    font-family: 'Oswald', sans-serif;
+    color: #27b6de;
+    font-size: 14px;  
 }
 
 .spacing-bottom-small {
@@ -110,14 +110,14 @@ p.best_offers {
 }
 
 .about_us_header p {
-  text-transform: uppercase;
-  font-weight: 400;
-  font-style: normal;
-  font-family: Roboto, sans-serif;
-  color: #5e5e5e;
-  font-size: 47px;
-  line-height: 1.2;
-  letter-spacing: 0px;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-style: normal;
+    font-family: Roboto, sans-serif;
+    color: #5e5e5e;
+    font-size: 47px;
+    line-height: 1.2;
+    letter-spacing: 0px;
 }
 
 .about_us_text {
@@ -133,33 +133,29 @@ p.best_offers {
 
 .products_header p {
     text-transform: uppercase;
-  font-weight: bold;
-  font-style: normal;
-  font-family: Roboto, sans-serif;
-  color: #5e5e5e;
-  font-size: 62px;
-  line-height: 1.2;
-  letter-spacing: 0px;
+    font-weight: bold;
+    font-style: normal;
+    font-family: Roboto, sans-serif;
+    color: #5e5e5e;
+    font-size: 62px;
+    line-height: 1.2;
+    letter-spacing: 0px;
 }
 .product_title {
-      text-transform: uppercase;
-  font-weight: bold;
-  font-style: normal;
-  font-family: Roboto, sans-serif;
-  color: #5e5e5e;
-  font-size: 40px;
-  line-height: 1.2;
-  letter-spacing: 0px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-style: normal;
+    font-family: Roboto, sans-serif;
+    color: #5e5e5e;
+    font-size: 40px;
+    line-height: 1.2;
+    letter-spacing: 0px;
 }
 .modal {
-	overflow: auto;
-	color: #333;
+    overflow: auto;
+    color: #333;
 }
 
-.contact_background {
-    height: 700px;
-    background:url('/img/contact_form_bg_bw.jpg') no-repeat bottom;   
-}
 
 .price_big {
     font-size: 36px;
@@ -185,7 +181,7 @@ p.best_offers {
     color: #8B1B13;
     font-family:'Merienda One', cursive;
     font-size: 16px;
-    
+
 }
 .main_menu li {
     list-style-type: none;

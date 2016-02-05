@@ -1,0 +1,75 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="map">
+        {{ include('layers/map.twig') }}
+    </div>
+
+
+    <div class="about_us_header spacing-top-normal-even">
+        <p class="">CONTACT </p>
+    </div>
+
+
+    <div class="row-fixed" data-widget="row">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-4" data-container="container">
+
+                    <p>Puteti sa ne contactati prin telefon:<br>
+                    <address>
+                        <p > <span class="glyphicon glyphicon-earphone"> 07XX-XXX.XXX</span>  </p>
+                        <p > <span class="glyphicon glyphicon-earphone"> 07XX-XXX.XXX</span> </p>
+                    </address>
+                    </p>
+
+                    <p class="gutter" style="text-indent: 30px "> sau puteti sa ne trimiteti un mail folosind formularul din drapta</p>
+                </div>
+                <div class="col-sm-8" data-container="container">
+                    <div class="" data-widget="text" data-preset="default" data-spacing="sasa">
+                        {% if message %}
+                            <div class="alert alert-success" role="alert">va multumum, mesajul a fost trimis</div>
+                        {% endif %}
+
+
+                        <div class="">
+
+                            <form action="" method="post" >
+
+                                <div>
+                                    Nume:<br />
+
+                                    <div class='form-input'>
+                                        <input type="text" name="contact_form[nume]" />
+                                    </div>
+                                </div>
+
+                                <div>  Email:<br />
+
+                                    <div class='form-input'>
+                                        <input type="text" name="contact_form[email]" />
+                                    </div>
+                                </div>
+
+                                <div> Mesaj:<br />
+
+                                    <div class='form-textarea'>
+                                        <textarea cols="50" rows="7" name="contact_form[mesaj]"></textarea>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="">Trimite</button>
+
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

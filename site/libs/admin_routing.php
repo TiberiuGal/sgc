@@ -14,8 +14,9 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
         ),
     )
 ));
-$app->register(new Silex\Provider\SessionServiceProvider());
 
+
+$app->get('/info', function(){phpinfo();});
 $app->get('/admin/', 'controllers\AdminController::indexAction');
 $app->post('/admin/encode_password', 'controllers\AdminController::encodePasswordAction');
 $app->get('/admin/articles', 'controllers\AdminController::articlesAction');

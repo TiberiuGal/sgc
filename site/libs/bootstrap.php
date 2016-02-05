@@ -3,7 +3,7 @@
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 
-$app['debug'] = true;
+$app['debug'] = isset($_SERVER['PHP_WEB_DEBUG_ENABLED'] ) ? $_SERVER['PHP_WEB_DEBUG_ENABLED'] : true; 
 
 $app['gallery'] = $app->share(function () {
     return new \ImageGalleryService();
@@ -12,6 +12,7 @@ $app['mailer'] = $app->share(function () {
     return new \PHPMailer();
 });
 
+$app->register(new Silex\Provider\SessionServiceProvider());
 
 $app['db.pdo'] = $app->share(function() {
 

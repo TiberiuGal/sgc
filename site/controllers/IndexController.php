@@ -22,10 +22,6 @@ class IndexController {
         ));
     }
 
-    public function aboutAction(Request $request, Application $app) {
-
-        return $app['twig']->render('despre.twig', array(
-        ));
-    }
+    
 
 }
