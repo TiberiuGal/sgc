@@ -1,5 +1,7 @@
 <?php
 
+namespace services;
+
 use models\ArticleModel;
 
 class ArticleService {
@@ -21,3 +23,5 @@ class ArticleService {
     }
 
 }
+
+

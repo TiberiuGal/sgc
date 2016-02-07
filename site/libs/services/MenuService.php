@@ -1,5 +1,5 @@
 <?php
-
+namespace services;
 use models\MenuModel;
 
 class MenuService {

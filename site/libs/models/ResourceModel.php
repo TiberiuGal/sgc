@@ -4,6 +4,9 @@ namespace models;
 
 class ResourceModel {
 
+    use ModelTrait;
+    
+    
     protected $data;
     protected $pdo;
     

@@ -4,9 +4,10 @@ namespace models;
 
 class ArticleModel {
 
+    use ModelTrait;
     protected $data;
     protected $pdo;
-    public $id;
+    public $id = 0;
     public $title;
     public $slug;
     public $author;
@@ -23,7 +24,7 @@ class ArticleModel {
     }
 
     public static function getBySlug($pdo, $slug) {
-        
+
         $stmt = $pdo->prepare(" select a.* from articles a where slug = :slug");
         $stmt->execute(array('slug' => $slug));
         if (!$stmt->rowCount()) {
@@ -95,7 +96,7 @@ class ArticleModel {
         $stmt->execute(array('title' => $this->title,
             'slug' => $this->slug,
             'body' => $this->body,
-            'author' => $this->author,            
+            'author' => $this->author,
             'excerpt' => $this->excerpt,
             'id' => $this->id
         ));

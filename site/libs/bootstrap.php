@@ -1,18 +1,17 @@
 <?php
 
-use Silex\Provider\FormServiceProvider;
-use Silex\Provider\ValidatorServiceProvider;
 
 $app['debug'] = isset($_SERVER['PHP_WEB_DEBUG_ENABLED'] ) ? $_SERVER['PHP_WEB_DEBUG_ENABLED'] : true; 
 
-$app['gallery'] = $app->share(function () {
-    return new \ImageGalleryService();
-});
+
 $app['mailer'] = $app->share(function () {
     return new \PHPMailer();
 });
 
 $app->register(new Silex\Provider\SessionServiceProvider());
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => dirname(__DIR__) . '/views',
+));
 
 $app['db.pdo'] = $app->share(function() {
 
@@ -27,21 +26,22 @@ $app['db.pdo'] = $app->share(function() {
 
     return $pdo;
 });
+$app['models'] = $app->share(function($app){
+    return new \services\ModelService($app['db.pdo']);
+});
 
 $app['menu'] = $app->share(function ($app) {
-    return new \MenuService($app['db.pdo']);
+    return new \services\MenuService($app['db.pdo']);
 });
 $app['articles'] = $app->share(function ($app) {
-    return new \ArticleService($app['db.pdo']);
+    return new \services\ArticleService($app['db.pdo']);
 });
 
-$app['contactsrv'] = $app->share(function () {
-    return new \ContactService();
+$app['carousel'] = $app->share(function($app){
+    return new \services\CarouselService();
 });
 
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => dirname(__DIR__) . '/views',
-));
+
 
 if (strpos($_SERVER['PATH_INFO'], '/admin/') !== FALSE) {
     require __DIR__ . '/admin_routing.php';
