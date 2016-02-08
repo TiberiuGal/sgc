@@ -1,0 +1,5 @@
+<ul>
+    {% for resource in resources %} 
+        <li>{{resource.title}} [ <a href="/resources/{{resource.file_name}}" >descarca</a> ] </li>
+        {% endfor%}
+</ul>

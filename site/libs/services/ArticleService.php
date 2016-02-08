@@ -7,9 +7,11 @@ use models\ArticleModel;
 class ArticleService {
 
     protected $pdo;
+    protected $app;
 
-    public function __construct($pdo) {
+    public function __construct($pdo, $app) {
         $this->pdo = $pdo;
+        $this->app = $app;
     }
 
     public function getArticle($slug) {
@@ -20,6 +22,17 @@ class ArticleService {
             $article = ArticleModel::getBySlug($this->pdo, '/404');
         }
         return $article;
+    }
+    
+    public function parseBodyPlugins($body) {
+        
+        $pluginService = $this->app['pluginService'];
+        
+        if(($newBody = preg_replace_callback('/(?:{\$([\w.-_\(\)]+)})/', array($pluginService, 'process'), $body))) {
+            return $newBody;
+        } 
+        return $body;
+    
     }
 
 }

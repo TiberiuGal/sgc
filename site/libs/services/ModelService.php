@@ -1,7 +1,7 @@
 <?php
 namespace services;
 
-use \models;
+
 
 class ModelService {
     protected $dbh;
@@ -10,16 +10,18 @@ class ModelService {
     }
     
     function getModel($model, array $params = array()) {
+        $model = 'models\\' .$model;
+                
         if (class_exists($model)){
             $modelObject = new $model($this->dbh);
         } else {
-            throw InvalidModelException("Model $model not found ");
+            throw new InvalidModelException("Model $model not found ");
         }
         
         foreach($params as $key => $val) {
             $modelObject->$key = $val;
         }
-        
+        return $modelObject;
     }
 }
 

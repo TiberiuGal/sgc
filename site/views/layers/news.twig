@@ -1,7 +1,7 @@
 <div class="latest_news">
     <div class="row-fixed latest_news" data-widget="row">
         <div class="container-fluid">
-            <div class="latest_news_header" data-widget="text" data-preset="default" data-spacing="lasa">
+            <div class="latest_news_header"
 
                 <p class="">Ultimele Stiri<br>
                 </p>
@@ -10,40 +10,20 @@
 
         </div>
     </div>
-    <div class="news-item">
+    {%for item in news%}
+        <div class="news-item">
             <div class="date">
-                <p class="">14 Martie 
-        
-                </p>
-            </div>
-        
+                <p>{{item.publishDate}}</p>
+            </div>        
             <hr />
-                <p class="">Lorem ipsum, Ut enim ad minima veniam, quis nostrum exercitationem</p>
-        
-        
-        <div class="spacing-bottom-large" data-widget="button" data-preset="2" data-align="left" data-spacing="sasa">
-            <a href="/more/" data-action="page" data-id="12" class="" data-anchor="" data-size="small">
-                citeste articol
-            </a>
-        </div>
-    </div>
-     <div class="news-item">
-            <div class="date">
-                <p class="">14 Martie 
-        
-                </p>
+            <p>{{item.excerpt}}</p>
+
+
+            <div class="spacing-bottom-large" >
+                <a href="/{{item.slug}}" > citeste articol </a>
             </div>
-        
-            <hr />
-                <p class="">Lorem ipsum, Ut enim ad minima veniam, quis nostrum exercitationem</p>
-        
-        
-        <div class="spacing-bottom-large" data-widget="button" data-preset="2" data-align="left" data-spacing="sasa">
-            <a href="/more/" data-action="page" data-id="12" class="" data-anchor="" data-size="small">
-                citeste articol
-            </a>
         </div>
-    </div>
+    {% endfor %}
 
 
 </div>

@@ -6,10 +6,6 @@ class ResourceModel {
 
     use ModelTrait;
     
-    
-    protected $data;
-    protected $pdo;
-    
     public $id = 0;
     public $title;
     public $description;
@@ -19,5 +15,8 @@ class ResourceModel {
     public $created_at;
     public $published;
  
-
+    public function getListing(){
+        $stmt = $this->pdo->query("select * from resources");
+        return $this->getList($stmt);
+    }
 }

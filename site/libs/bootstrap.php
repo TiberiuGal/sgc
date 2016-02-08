@@ -1,7 +1,6 @@
 <?php
 
-
-$app['debug'] = isset($_SERVER['PHP_WEB_DEBUG_ENABLED'] ) ? $_SERVER['PHP_WEB_DEBUG_ENABLED'] : true; 
+$app['debug'] = isset($_SERVER['PHP_WEB_DEBUG_ENABLED']) ? $_SERVER['PHP_WEB_DEBUG_ENABLED'] : true;
 
 
 $app['mailer'] = $app->share(function () {
@@ -26,7 +25,7 @@ $app['db.pdo'] = $app->share(function() {
 
     return $pdo;
 });
-$app['models'] = $app->share(function($app){
+$app['models'] = $app->share(function($app) {
     return new \services\ModelService($app['db.pdo']);
 });
 
@@ -34,11 +33,15 @@ $app['menu'] = $app->share(function ($app) {
     return new \services\MenuService($app['db.pdo']);
 });
 $app['articles'] = $app->share(function ($app) {
-    return new \services\ArticleService($app['db.pdo']);
+    return new \services\ArticleService($app['db.pdo'], $app);
 });
 
-$app['carousel'] = $app->share(function($app){
+$app['carousel'] = $app->share(function($app) {
     return new \services\CarouselService();
+});
+
+$app['pluginService'] = $app->share(function($app) {
+    return new \services\PluginService($app);
 });
 
 

@@ -3,6 +3,22 @@
 namespace models;
 
 trait ModelTrait {
+    
+    protected $data;
+    protected $pdo;
+    
+    function __construct($pdo = null, $data = null) {
+        $this->pdo = $pdo;
+        $this->data = $data;
+    }
+    
+    public function getList(\PDOStatement $stmt){
+        $resources = array();
+        while(($row = $stmt->fetchObject(__CLASS__))){
+            $resources[] = $row;
+        }
+        return $resources;
+    } 
 
     function __get($name) {
 

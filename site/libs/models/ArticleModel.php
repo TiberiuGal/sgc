@@ -5,6 +5,7 @@ namespace models;
 class ArticleModel {
 
     use ModelTrait;
+
     protected $data;
     protected $pdo;
     public $id = 0;
@@ -18,6 +19,11 @@ class ArticleModel {
     public $published;
     public $publish_date;
 
+    public function publishDate($format = 'd M'){
+        $d =  new \DateTime($this->publish_date);
+        return $d->format($format);        
+    }
+    
     public static function getById($pdo, $id) {
         $row = $pdo->query(" select a.* from articles a where id = $id");
         return new ArticleModel($pdo, $row->fetch($pdo::FETCH_ASSOC));
@@ -34,9 +40,7 @@ class ArticleModel {
     }
 
     public static function createFromData($pdo, $data) {
-
         $obj = new ArticleModel($pdo);
-
         $obj->load($data);
         return $obj;
     }
@@ -55,13 +59,6 @@ class ArticleModel {
         }
         $this->load($data);
         $this->_setCategories();
-    }
-
-    function __get($name) {
-
-        if (method_exists($this, ( $fn = "get{$name}"))) {
-            return $this->$fn();
-        }
     }
 
     public function hasCategory($categoryId) {
@@ -124,13 +121,25 @@ class ArticleModel {
     }
 
     protected function updateCategories() {
-        var_dump($this);
+
         $stmt = $this->pdo->prepare("delete from articles_categories where article_id = :id ");
         $stmt->execute(array('id' => $this->id));
         $insertStmt = $this->pdo->prepare("insert into articles_categories (article_id, category_id) values(:article_id, :category_id) ");
         foreach ($this->categories as $key => $val) {
             $insertStmt->execute(array('article_id' => $this->id, 'category_id' => $key));
         }
+    }
+
+    public function getNews($limit = 2) {
+
+        $stmt = $this->pdo->query("SELECT a.slug, a.title, a.excerpt, a.publish_date "
+                . " FROM articles a "
+                . " JOIN articles_categories i ON a.id = i.article_id AND i.category_id = 2 "
+                . " ORDER BY publish_date DESC "
+                . " LIMIT $limit ");
+      
+
+        return $this->getList($stmt);
     }
 
 }

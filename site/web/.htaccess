@@ -9,11 +9,12 @@ RewriteEngine On
 
 #RewriteBase /
 # don't rewrite assets
-RewriteRule ^((css|js|img|fancybox|resources)/.*)$ - [L]
+RewriteRule ^((css|js|img|fancybox)/.*)$ - [L]
 RewriteRule ^favicon.ico$ - [L]
 RewriteCond %{HTTP:Authorization} ^(.+)$
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+RewriteRule resources/.* - [L,T=applicaton/octet-stream]
 #don't rewrite index.php
 RewriteRule index\.php - [L]
 
