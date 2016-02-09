@@ -15,6 +15,8 @@
 
                     <label for="article_author">Autor</label>
                     <input type="text" name="article[author]" id="article_author" value="{{article.author}}" /> <br />
+                    <label for="article_author">Data Publicare</label>
+                    <input type="text" name="article[publish_date]" id="article_publish_date" value="{{article.publish_date}}" data-date-format="yyyy-mm-dd"  /><span class="btn btn-default btn-sm"><i class="glyphicon glyphicon-calendar icon-black"></i></span> <br />
                 </fieldset>
                 <fieldset class="article_categories"> 
                     <legend>categorii</legend> <br />
@@ -42,8 +44,20 @@
         <div class="col-sm-3">
             <span class="info">Info:</span>
             <ul>
-                <li><b>URL</b>: link catre articol,
-                    este generat automat din titlu.</li>
+                <li><b>URL</b>: link catre articol</li>
+                <li><b>Categorii</b> : <br />
+                    <b>pages</b>: pagina normala de cms
+                    <b>news</b>: apare in sectiunea de news
+
+                </li>
+                <li style="list-style-type: none;"> <hr /> </li>
+                <li style="list-style-type: none;">Continut Dinamic:</li>
+                <li>{$lista_resurse} 
+
+                </li>
+                <li style="list-style-type: none;"> <hr /> </li>
+                <li style="list-style-type: none">legaturi:</li>
+
                 <li><a href="/admin/articles">Lista articole</a></li>
             </ul>
 
@@ -60,6 +74,14 @@
                 image_advtab: true,
                 autoresize_max_height: 500,
                 autoresize_on_init: true
+            });
+            $('#article_publish_date').datepicker().on('changeDate', function (ev) {
+
+                $(this).datepicker('hide')
+            });
+            ;
+            $('#article_publish_date').next().click(function () {
+                $(this.previousSibling).focus();
             });
         });
     </script>

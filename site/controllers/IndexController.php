@@ -16,10 +16,12 @@ class IndexController {
         $data = $app['menu']->getData();
         $carousel = $app['carousel'];
         $news = $app['models']->getModel('ArticleModel')->getNews();
+        $article = $app['models']->getModel('ArticleModel')->getBySlug($app['db.pdo'], '/');
         return $app['twig']->render('index.twig', array(
                     'carousel' => $carousel->getData(),
                     'menu' => $data,
-                    'news' => $news
+                    'news' => $news,
+                    'article' => $article
         ));
     }
 

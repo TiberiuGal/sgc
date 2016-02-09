@@ -97,8 +97,8 @@ class AdminController {
         $pdo = $app['db.pdo'];
 
         $stmt = $pdo->prepare("replace into menu_items "
-                . " (title, link, parent, sort_index, menu_id)"
-                . " values(:title, :link, :parent, :sort_index,:menu_id ) "
+                . " (title, slug, article_id, parent, sort_index, menu_id)"
+                . " values(:title, :slug, :article_id, :parent, :sort_index,:menu_id ) "
                 . " where id = :id ");
 
 
@@ -106,7 +106,8 @@ class AdminController {
             $params = array('menu_id' => $menuId,
                 'sort_index' => $ix,
                 'title' => $row['text'],
-                'link' => $row['data']['slug'],
+                'slug' => $row['data']['slug'],
+                'slug' => $row['data']['article_id'],
                 'parent' => $row['parent'],
                 'id' => $row['id']
             );
@@ -154,11 +155,12 @@ class AdminController {
     protected function addArticleToMenu($articleId, $menuId, Application $app) {
         $pdo = $app['db.pdo'];
         $article = ArticleModel::getById($pdo, $articleId);
-        $stmt = $pdo->prepare("insert into menu_items (title, link, menu_id, sort_index) values( :title, :link, :menu_id, :sort_index ) ");
+        $stmt = $pdo->prepare("insert into menu_items (title, slug, article_id menu_id, sort_index) values( :title, :slug,:article_id, :menu_id, :sort_index ) ");
         $nextSortIndex = $pdo->query("select count(id) as sort_index from menu_items where menu_id = $menuId ")->fetch();
         $res = $stmt->execute(array(
             'title' => $article->title,
-            'link' => $article->slug,
+            'slug' => $article->slug,
+            'article_id' => $article->id,
             'menu_id' => $menuId,
             'sort_index' => $nextSortIndex['sort_index']
         ));

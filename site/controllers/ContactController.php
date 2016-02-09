@@ -11,16 +11,18 @@ class ContactController {
         $message = isset($_SESSION['message_sent']) ? true : false;
         unset($_SESSION['message_sent']);
         $data = $app['menu']->getData();
+        $news = $app['models']->getModel('ArticleModel')->getNews();
         return $app['twig']->render('contact.twig', array(
                     'message' => $message,
-                    'menu' => $data
+                    'menu' => $data,
+                    'news' => $news
         ));
     }
 
     public function contactSentAction(Request $request, Application $app) {
 
         $data = $request->get('contact_form');
-        $contactEmail = 'office@scoalageneralachristiana.ro';
+        $contactEmail = 'office@scoalachristiana.ro';
         $message = sprintf('
             Salut,
                     Ai primit un mesaj prin intermediul formularului de contact.
@@ -35,7 +37,7 @@ class ContactController {
         $mailer->Password = '';
         $mailer->SMTPSecure = 'ssl';
         $mailer->Port = 465;
-        $mailer->setFrom('office@scoalageneralachristiana.ro');
+        $mailer->setFrom('office@scoalachristiana.ro');
         $mailer->addReplyTo($data['email']);
         $mailer->addAddress($contactEmail);
         $mailer->Subject = 'Formular contact ';

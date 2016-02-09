@@ -19,24 +19,35 @@ class ArticleModel {
     public $published;
     public $publish_date;
 
-    public function publishDate($format = 'd M'){
-        $d =  new \DateTime($this->publish_date);
-        return $d->format($format);        
+    public function publishDate($format = 'd M') {
+        $d = new \DateTime($this->publish_date);
+        return $d->format($format);
     }
-    
+
     public static function getById($pdo, $id) {
         $row = $pdo->query(" select a.* from articles a where id = $id");
         return new ArticleModel($pdo, $row->fetch($pdo::FETCH_ASSOC));
     }
 
-    public static function getBySlug($pdo, $slug) {
+    public function getBySlugOrNotFound($slug) {
+        try {
+            $article = $this->getBySlug($slug);
+        } catch (\Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException $ex) {
+            $article = $this->getBySlug('/404');
+        }
+        return $article;
+    }
 
-        $stmt = $pdo->prepare(" select a.* from articles a where slug = :slug");
+    public function getBySlug($slug) {
+        if (strpos($slug, '/') !== 0) {
+            $slug = '/' . $slug;
+        }
+        $stmt = $this->pdo->prepare(" select a.* from articles a where slug = :slug");
         $stmt->execute(array('slug' => $slug));
         if (!$stmt->rowCount()) {
             throw new \Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException($slug);
         }
-        return new ArticleModel($pdo, $stmt->fetch($pdo::FETCH_ASSOC));
+        return new ArticleModel($this->pdo, $stmt->fetch(\PDO::FETCH_ASSOC));
     }
 
     public static function createFromData($pdo, $data) {
@@ -87,7 +98,8 @@ class ArticleModel {
                 slug = :slug,
                 body = :body,
                 author = :author,
-                excerpt = :excerpt
+                excerpt = :excerpt, 
+                publish_date = :publish_date
                 where id = :id
                 ");
         $stmt->execute(array('title' => $this->title,
@@ -95,6 +107,7 @@ class ArticleModel {
             'body' => $this->body,
             'author' => $this->author,
             'excerpt' => $this->excerpt,
+            'publish_date' => $this->publish_date,
             'id' => $this->id
         ));
         $this->updateCategories();
@@ -106,13 +119,15 @@ class ArticleModel {
                 slug = :slug,
                 body = :body,
                 author = :author,
-                excerpt = :excerpt
+                excerpt = :excerpt, 
+                publish_date = :publish_date
                 ");
         $stmt->execute(array('title' => $this->title,
             'slug' => $this->slug,
             'body' => $this->body,
             'author' => $this->author,
-            'excerpt' => $this->excerpt
+            'excerpt' => $this->excerpt,
+            'publish_date' => $this->publish_date
         ));
 
 
@@ -137,7 +152,7 @@ class ArticleModel {
                 . " JOIN articles_categories i ON a.id = i.article_id AND i.category_id = 2 "
                 . " ORDER BY publish_date DESC "
                 . " LIMIT $limit ");
-      
+
 
         return $this->getList($stmt);
     }

@@ -32,10 +32,6 @@ $app['models'] = $app->share(function($app) {
 $app['menu'] = $app->share(function ($app) {
     return new \services\MenuService($app['db.pdo']);
 });
-$app['articles'] = $app->share(function ($app) {
-    return new \services\ArticleService($app['db.pdo'], $app);
-});
-
 $app['carousel'] = $app->share(function($app) {
     return new \services\CarouselService();
 });

@@ -8,9 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 class CmsController {
 
     public function pageAction($url, Request $request, Application $app) {
-
-        $article = $app['articles']->getArticle($url);
-        $article->body = $app['articles']->parseBodyPlugins( $article->body );
+        
+        $articleModel = $app['models']->getModel('ArticleModel');
+        
+        $article = $articleModel->getBySlugOrNotFound($url);
+        $app['pluginService']->parseBodyPlugins( $article->body );
+        
         $news = $app['models']->getModel('ArticleModel')->getNews();
         return $app['twig']->render('article.twig', array(
                     'article' => $article,

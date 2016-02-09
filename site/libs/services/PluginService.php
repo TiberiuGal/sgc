@@ -18,7 +18,13 @@ class PluginService {
         return call_user_method_array($methodName, $pluginObject, $params);
     }
     
-    
+    public function parseBodyPlugins(&$body) {
+        
+        if(($newBody = preg_replace_callback('/(?:{\$([\w.-_\(\)]+)})/', array($this, 'process'), $body))) {
+            $body = $newBody;
+            
+        }         
+    }
     
     protected function parseMatchString($pluginString) {
         

@@ -9,6 +9,7 @@ class MenuModel {
     public $id;
     public $title;
     public $items;
+    
     static protected $flat = false;
     
     public function __construct($pdo = null, $data = null) {
@@ -46,7 +47,8 @@ class MenuModel {
                 'text' => $item['title'],
                 'parent' => $item['parent'] ? $item['parent'] : '#',
                 'data'=> array(
-                    'slug'=>$item['link']
+                    'slug'=>$item['slug'],
+                    'article_id' => $item['article_id']
                 )
             );
         }
