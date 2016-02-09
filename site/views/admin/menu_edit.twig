@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div id="tree_menu" ></div>
-                    <button id="save_tree"  class="btn-success btn-sm"><i class="glyphicon glyphicon-floppy-disk"></i>Salveaza Meniul</button>
+                    <button id="save_tree"  class="btn-success btn-sm"><i class="glyphicon glyphicon-floppy-disk"></i> | Salveaza Meniul</button>
                 </div>
                 <div id="tree_controls" class="col-sm-5">
                     <fieldset>
@@ -20,8 +20,8 @@
                         <div>
                             <label>URL</label><input type="text" name="url"/>
                         </div>
-                        <button class="btn-success btn-sm" id="update_menu_item"><i class="glyphicon glyphicon-pencil"></i>actualizeaza elementul</button>
-                        <button class="btn-warning btn-sm" id="delete_menu_item"><i class="glyphicon glyphicon-remove"></i> sterge elementul</button>
+                        <button class="btn-success btn-sm" id="update_menu_item"><i class="glyphicon glyphicon-pencil"></i> | actualizeaza elementul</button>
+                        <button class="btn-danger btn-sm" id="delete_menu_item"><i class="glyphicon glyphicon-remove"></i> | sterge elementul</button>
                     </fieldset>
 
                 </div>
@@ -46,7 +46,9 @@
 
             $('#tree_menu')
                     .on('changed.jstree', function (e, data) {
-
+                        if (!data.selected.length) {
+                            return true;
+                        }
                         var node = data.instance.get_node(data.selected[0]);
                         $('#tree_controls input[name=menu_node]').val(data.selected[0]);
                         $('#tree_controls input[name=titlu]').val(node.text);
@@ -54,9 +56,9 @@
                         return true;
                     })
                     .jstree({
-                        "plugins": ["dnd",  "contextmenu"],
+                        "plugins": ["dnd", "contextmenu"],
                         "core": {
-                            "check_callback" : true,
+                            "check_callback": true,
                             "multiple": false,
                             "data": menuData
                         },
@@ -64,20 +66,24 @@
             setTimeout(function () {
                 $('#tree_menu').jstree().open_all();
             }, 300);
-            
-            $("#update_menu_item").click(function(){
+
+            $("#update_menu_item").click(function () {
                 var ref = $('#tree_menu').jstree(true);
                 var nodeId = $('#tree_controls input[name=menu_node]').val();
                 var node = ref.get_node(nodeId);
                 node.text = $('#tree_controls input[name=titlu]').val();
                 node.data.slug = $('#tree_controls input[name=url]').val();
-                ref.redraw_node( node );
+                ref.redraw_node(node);
             });
-            $("#delete").click(function(){
+            $("#delete_menu_item").click(function () {
                 var ref = $('#tree_menu').jstree(true);
                 var sel = ref.get_selected();
-                if(!sel.length) return false;
+                if (!sel.length)
+                    return false;
                 ref.delete_node(sel);
+                $('#tree_controls input[name=menu_node]').val('');
+                $('#tree_controls input[name=titlu]').val('');
+                $('#tree_controls input[name=url]').val('');
             });
             $('#save_tree').click(function () {
                 var nodes = $('#tree_menu').jstree().get_json(null, {"flat": true});
@@ -86,7 +92,7 @@
                     'url': '/admin/menu/' + menuId,
                     'method': 'post',
                     'data': nodeData,
-                    "success": function(data){
+                    "success": function (data) {
                         console.log(data);
                     }
                 });
