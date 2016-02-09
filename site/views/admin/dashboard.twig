@@ -4,13 +4,16 @@
     <div class="row">
         <h2>Tools:</h2>
         <div>
-            <p>Admin password generator</p>
+            <p><b>Admin password generator</b></p>
+            <p>parola de access in contul de administrare e salvata in .htaccess intr-un format encodat. <br />
+            poti folosi tool-ul de mai jos pentru a genera o noua parola, pe care sa o inlocuiesti in fisierul .htaccess</p>
             <form action="/admin/encode_password" method="post">
                 <input type="text" name="password" value="{{password}}" placeholder="parola" />
                 <input type="submit" value="encode password" />
             </form>
-                
+                {% if encodedPassword %}
                 <div class="password_encoded"> <span>parola encodata:</span> {{encodedPassword}}</div>
+            {% endif %}
         </div>
     </div>
     {% endblock %}

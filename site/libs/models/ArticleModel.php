@@ -111,6 +111,7 @@ class ArticleModel {
             'id' => $this->id
         ));
         $this->updateCategories();
+        $this->updateMenuItem();
     }
 
     public function saveNew() {
@@ -143,6 +144,11 @@ class ArticleModel {
         foreach ($this->categories as $key => $val) {
             $insertStmt->execute(array('article_id' => $this->id, 'category_id' => $key));
         }
+    }
+
+    protected function updateMenuItem() {
+        $stmt = $this->pdo->prepare("update menu_items set slug = :slug where article_id = :id ");
+        $stmt->execute(array('id' => $this->id, 'slug' => $this->slug));
     }
 
     public function getNews($limit = 2) {

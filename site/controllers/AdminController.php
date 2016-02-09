@@ -97,9 +97,8 @@ class AdminController {
         $pdo = $app['db.pdo'];
 
         $stmt = $pdo->prepare("replace into menu_items "
-                . " (title, slug, article_id, parent, sort_index, menu_id)"
-                . " values(:title, :slug, :article_id, :parent, :sort_index,:menu_id ) "
-                . " where id = :id ");
+                . " (id , title, slug, article_id, parent, sort_index, menu_id)"
+                . " values(:id , :title, :slug, :article_id, :parent, :sort_index, :menu_id ) ");
 
 
         foreach ($data as $ix => $row) {
@@ -107,12 +106,14 @@ class AdminController {
                 'sort_index' => $ix,
                 'title' => $row['text'],
                 'slug' => $row['data']['slug'],
-                'slug' => $row['data']['article_id'],
+                'article_id' => $row['data']['article_id'],
                 'parent' => $row['parent'],
                 'id' => $row['id']
             );
 
-            $stmt->execute($params);
+            if (!$stmt->execute($params)) {
+                return "false";
+            }
         }
 
         return "ok";
@@ -209,11 +210,21 @@ class AdminController {
         ));
     }
 
+    public function deleteResourceAction($resourceId, Request $request, Application $app) {
+        $pdo = $app['db.pdo'];
+
+        $pdo->exec("delete from resources where id = $resourceId ");
+        if ($request->isXmlHttpRequest()) {
+            return 'ok';
+        }
+        return $app->redirect('/admin/resources');
+    }
+
     public function saveResourceAction($resourceId, Request $request, Application $app) {
         $pdo = $app['db.pdo'];
 
         $params = $request->request->get('resource');
-        
+
         $sqlString = " resources set ";
 
         if (!empty($request->files)) {
@@ -242,7 +253,7 @@ class AdminController {
 
         $stmt = $pdo->prepare($sqlString);
         $res = $stmt->execute($params);
-        
+
         return $app->redirect('/admin/resources');
     }
 

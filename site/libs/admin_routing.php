@@ -29,5 +29,6 @@ $app->get('/admin/images', 'controllers\AdminController::imagesAction');
 $app->post('/admin/images', 'controllers\AdminController::uploadImageAction');
 $app->get('/admin/resources', 'controllers\AdminController::resourcesAction');
 $app->get('/admin/resource/{resourceId}', 'controllers\AdminController::resourceAction');
+$app->delete('/admin/resource/{resourceId}', 'controllers\AdminController::deleteResourceAction');
 $app->post('/admin/resource/{resourceId}', 'controllers\AdminController::saveResourceAction');
 
