@@ -2,7 +2,7 @@
     {% for menuItem in menu.items %} 
         <li >
 
-            <a href="{{menuItem.link}}">{{menuItem.title}}</a>
+            <a href="{{menuItem.slug}}">{{menuItem.title}}</a>
             
             {% if menuItem.items is defined %}
 
