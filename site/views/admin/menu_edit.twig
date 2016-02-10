@@ -3,6 +3,7 @@
 
 
 {% block content %}
+    <div id="notice_board" class="alert alert-success alert-dismissible"></div>
     <div class="row">
         <div class="col-sm-9">
             <div class="row">
@@ -42,8 +43,9 @@
         var menuId = parseInt({{menuId}});
         var menuData = {{menuData|raw}};</script>
     <script>
-                $(document).ready(function () {
 
+                $(document).ready(function () {
+            var gv_deletes = [];
             $('#tree_menu')
                     .on('changed.jstree', function (e, data) {
                         if (!data.selected.length) {
@@ -77,9 +79,10 @@
             });
             $("#delete_menu_item").click(function () {
                 var ref = $('#tree_menu').jstree(true);
-                var sel = ref.get_selected();
+                var sel = ref.get_selected();                
                 if (!sel.length)
                     return false;
+                gv_deletes.push(sel[0]);
                 ref.delete_node(sel);
                 $('#tree_controls input[name=menu_node]').val('');
                 $('#tree_controls input[name=titlu]').val('');
@@ -88,12 +91,18 @@
             $('#save_tree').click(function () {
                 var nodes = $('#tree_menu').jstree().get_json(null, {"flat": true});
                 var nodeData = {'data': nodes};
+                nodeData.deletes = gv_deletes;
                 $.ajax({
                     'url': '/admin/menu/' + menuId,
                     'method': 'post',
                     'data': nodeData,
                     "success": function (data) {
-                        console.log(data);
+                        if (data == 'ok') {
+                            $('#notice_board').text('meniul a fost salvat cu success').show();
+                            setTimeout(function () {
+                                $('#notice_board').hide('slow');
+                            }, 3000);
+                        }
                     }
                 });
             });

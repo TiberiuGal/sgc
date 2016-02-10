@@ -47,9 +47,10 @@ textarea {
 .article_meta input {
     width: 300px;
 }
-.article_meta label, .article_categories label {
-    width: 100px;
+.admin_form label {
+    width: 120px;
     padding: 0px 3px;
+    color: #3a3a3a;
 }
 
 .password_encoded {
@@ -59,7 +60,7 @@ textarea {
     padding: 2px 5px 2px 0px;
     font-family: monospace;
     margin: 10px;
-    
+
 }
 .password_encoded span {
     background-color: #d1edff;
@@ -67,4 +68,22 @@ textarea {
     margin-right: 10px;
     padding:3px;
     border-radius: 3px;
+}
+#notice_board {
+    display: none;
+}
+.admin_container .admin_form {
+    padding: 9px 14px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+}
+.resource_form {
+    float:left;
+    width: 400px;
+}
+.media_types {
+    float: right;
+    width: 200px;
 }

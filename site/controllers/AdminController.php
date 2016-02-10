@@ -85,8 +85,7 @@ class AdminController {
                     'jsFiles' => array('/js/jstree/jstree.js', '/js/jstree/jstree.dnd.js'),
                     'cssFiles' => array('/js/jstree/themes/default/style.css'),
                     'menuData' => $menu->toJson(),
-                    'menuId' => $menuId,
-                    'articles' => $articles
+                    'menuId' => $menuId
         ));
     }
 
@@ -115,7 +114,10 @@ class AdminController {
                 return "false";
             }
         }
-
+        if (($deletes = $request->get('deletes'))) {
+            $ids = '(' . implode(', ', $deletes) . ')';
+            $del = $pdo->exec("delete from menu_items where id in $ids ");
+        }
         return "ok";
     }
 
@@ -156,7 +158,7 @@ class AdminController {
     protected function addArticleToMenu($articleId, $menuId, Application $app) {
         $pdo = $app['db.pdo'];
         $article = ArticleModel::getById($pdo, $articleId);
-        $stmt = $pdo->prepare("insert into menu_items (title, slug, article_id menu_id, sort_index) values( :title, :slug,:article_id, :menu_id, :sort_index ) ");
+        $stmt = $pdo->prepare("insert into menu_items (title, slug, article_id, menu_id, sort_index, parent) values( :title, :slug, :article_id, :menu_id, :sort_index, 0 ) ");
         $nextSortIndex = $pdo->query("select count(id) as sort_index from menu_items where menu_id = $menuId ")->fetch();
         $res = $stmt->execute(array(
             'title' => $article->title,
@@ -165,6 +167,7 @@ class AdminController {
             'menu_id' => $menuId,
             'sort_index' => $nextSortIndex['sort_index']
         ));
+
 
         return $app->redirect('/admin/menu/' . $menuId);
     }
@@ -180,33 +183,36 @@ class AdminController {
     }
 
     public function resourcesAction(Request $request, Application $app) {
-        $pdo = $app['db.pdo'];
+        $resources = $app['models']->getModel('ResourceModel')->getListing();
 
-        $res = $pdo->query("select * from resources  ");
-        $rows = array();
-        while (($row = $res->fetchObject('\models\ResourceModel'))) {
-            $rows[] = $row;
+        $twig = $app['twig'];
+        $twig->addFilter(new \Twig_SimpleFilter('resize', function($data) {
+            $iVal = intval($data);
+            $iVal = round($iVal / 1024, 2);
+            if ($iVal < 1024) {
+                return $iVal . " Kb";
+            }
+            return $iVal = round($iVal / 1024, 2) . " Mb";
         }
+        ));
 
-        return $app['twig']->render('admin/resources.twig', array(
-                    'jsFiles' => array('/js/admin.js'),
-                    'resources' => $rows
+        return $twig->render('admin/resources.twig', array(
+            'jsFiles' => array('/js/admin.js'),
+            'resources' => $resources
         ));
     }
 
     public function resourceAction($resourceId, Request $request, Application $app) {
         if ($resourceId) {
-            $pdo = $app['db.pdo'];
-            $stmt = $pdo->prepare("select * from resources where id = :id ");
-            $stmt->execute(array('id' => $resourceId));
-            $resource = $stmt->fetchObject('\models\ResourceModel');
+            $resource = $app['models']->getModel('ResourceModel')->byId($resourceId);
         } else {
             $resource = new ResourceModel();
         }
 
         return $app['twig']->render('admin/resource_edit.twig', array(
                     'jsFiles' => array('/js/admin.js'),
-                    'resource' => $resource
+                    'resource' => $resource,
+                    'media_types' => $app['models']->getModel('MediaTypeModel')->getMediaTypes()
         ));
     }
 
@@ -221,14 +227,11 @@ class AdminController {
     }
 
     public function saveResourceAction($resourceId, Request $request, Application $app) {
-        $pdo = $app['db.pdo'];
 
         $params = $request->request->get('resource');
+        $params['id'] = $resourceId;
 
-        $sqlString = " resources set ";
-
-        if (!empty($request->files)) {
-
+        if ($request->files->count()) {
 
             $fileData = $this->uploadResourceAction($request, $app);
             $file = $fileData[0];
@@ -238,21 +241,9 @@ class AdminController {
             $params['file_type'] = $file->getClientOriginalExtension();
             $params['file_size'] = $size;
         }
-        $keys = array_keys($params);
-        $sqlString .= implode(' , ', array_map(function($key) {
-                    return "{$key} = :{$key}";
-                }, $keys));
+        $resourceObject = $app['models']->Resource;
 
-        if ($resourceId) {
-            $params['id'] = $resourceId;
-            $sqlString = 'UPDATE ' . $sqlString . ' where id = :id ';
-        } else {
-            $sqlString = 'INSERT into ' . $sqlString;
-        }
-
-
-        $stmt = $pdo->prepare($sqlString);
-        $res = $stmt->execute($params);
+        $resourceObject->save($params);
 
         return $app->redirect('/admin/resources');
     }

@@ -7,7 +7,7 @@
     <table class="table table-striped table-hover">
 
         <thead >
-            <tr><th colspan="5">lista resurse:</th><th><a href="/admin/resource/0" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-plus"></i> | adauga resursa </a></th></tr>
+            <tr><th colspan="5">lista resurse:</th><th><a href="/admin/resource/0" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i> | adauga resursa </a></th></tr>
             <tr>
                 <th width="20">id</th>
                 <th width="200">titlu</th>
@@ -23,11 +23,12 @@
                 <tr>
                     <td>{{resource.id}}</td>
                     <td>{{resource.title}} </td>
-                    <td>{{resource.description}}</td>
-                    <td>{{resource.file_name }} ( {{resource.file_size}} )</td>
+                    <td>{{resource.description}}</td>                    
+                    <td>{{resource.file_name }} ( {{resource.file_size | resize}} )</td>
+                    <td>{{resource.mediaTypes| join(', ')}}</td>
                     <td>
                         <a href="/admin/resource/{{resource.id}}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i> | edit </a>
-                        <a href="#" data-link="/admin/resource/{{resource.id}}" class="btn btn-danger btn-xs jst_confirm" ><i class="glyphicon glyphicon-delete"></i> | sterge </a>
+                        <a href="#" data-link="/admin/resource/{{resource.id}}" class="btn btn-danger btn-xs jst_confirm" ><i class="glyphicon glyphicon-trash"></i> | sterge </a>
                     </td>
                 </tr>
             {% endfor %}

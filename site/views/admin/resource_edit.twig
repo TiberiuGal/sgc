@@ -2,24 +2,38 @@
 
 
 {% block content %}
+    <div class="row container-fluid">
+        <div class="col-sm-9 resource admin_form">
+            <form action="/admin/resource/{{resource.id}}" method="POST" enctype="multipart/form-data">
+                <fieldset class="media_types"> 
+                    <legend>tip:</legend> 
+                    {% for media in media_types%} 
+                        <label for="resource_type_{{media.id}}">{{media.title}}</label> 
+                        <input type="checkbox" name="resource[media][{{media.id}}]" id="resource_type_{{media.id}}" {{resource.hasMediaType(media.id) ? 'checked="checked"' : ''}} />   <br />
+                    {% endfor %}
+                </fieldset>
+                <fieldset class="resource_form">
+                    <label for="resource_title">Titlu</label> <input type="text" name="resource[title]" id="resource_title" value="{{resource.title}}" /> <br/>
+                    <label for="resource_description">Descriere</label> <textarea name="resource[description]" id="resource_description" >{{resource.description}}</textarea> <br/>
+                    <label for="resource_file">Fisier</label>
+                    {%if resource.file_name %}
+                        <div class="resource_file">{{resource.file_name}}</div>
+                    {%else%}
+                        <input type="file" name="userfile" id="resource_file" />
+                    {%endif%}
 
-    <div class="col-sm-9 resource">
-        <form action="/admin/resource/{{resource.id}}" method="POST" enctype="multipart/form-data">
-            
-            <label for="resource_title">Titlu</label> <input type="text" name="resource[title]" id="resource_title" value="{{resource.title}}" /> <br/>
-            <label for="resource_description">Descriere</label> <textarea name="resource[description]" id="resource_description" >{{resource.description}}</textarea> <br/>
-            <label for="resource_file">Fisier</label>
-            {%if resource.file_name %}
-                <div class="resource_file">{{resource.file_name}}</div>
-                {%else%}
-                    <input type="file" name="userfile" id="resource_file" />
-                {%endif%}
-                <div>
-                    <button>Salveaza</button>
-                </div>
-        </form>
-    </div>
-    <div class="col-sm-3">
+                </fieldset>
 
+                <fieldset style="clear:both; margin-top: 30px;">
+                    <div>
+                        <hr/>
+                        <button class="btn btn-sm btn-success">Salveaza</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="col-sm-3">
+
+        </div>
     </div>
 {% endblock %}

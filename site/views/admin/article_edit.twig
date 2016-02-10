@@ -2,8 +2,8 @@
 
 
 {% block content %}
-    <div class="row">
-        <div class="col-sm-9 article">
+    <div class="row container-fluid">
+        <div class="col-sm-9 article admin_form">
             <form action="/admin/article/{{article.id}}" method="POST" >
                 <fieldset class="article_meta"><legend>articol</legend>
                     <input type="hidden" name="article[id]" id="article_id" value="{{article.id}}" /> <br />

@@ -55,13 +55,7 @@ class ArticleModel {
         $obj->load($data);
         return $obj;
     }
-
-    protected function load($data) {
-        $this->data = $data;
-        foreach ($this->data as $key => $val) {
-            $this->$key = $val;
-        }
-    }
+    
 
     public function __construct($pdo = null, $data = null) {
         $this->pdo = $pdo;
