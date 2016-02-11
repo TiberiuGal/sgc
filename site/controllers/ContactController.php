@@ -10,11 +10,11 @@ class ContactController {
     public function contactAction(Request $request, Application $app) {
         $message = isset($_SESSION['message_sent']) ? true : false;
         unset($_SESSION['message_sent']);
-        $data = $app['menu']->getData();
+        
         $news = $app['models']->getModel('ArticleModel')->getNews();
         return $app['twig']->render('contact.twig', array(
                     'message' => $message,
-                    'menu' => $data,
+                    'menu' => $app['models']->Menu->byId(1),
                     'news' => $news
         ));
     }

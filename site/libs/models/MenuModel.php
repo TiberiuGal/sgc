@@ -4,25 +4,17 @@ namespace models;
 
 class MenuModel {
 
-    protected $data;
-    protected $pdo;
+    use ModelTrait;
+
     public $id;
     public $title;
     public $items;
-    
     static protected $flat = false;
-    
-    public function __construct($pdo = null, $data = null) {
-        $this->pdo = $pdo;
-        if (!empty($data)) {
-            $this->load($data);
-        }
-    }
 
-    
-    public static function getById($pdo, $id) {
-        $res = $pdo->query(" select a.* from menu a where id = $id");
-        return MenuModel::createFromData($pdo, $res->fetch($pdo::FETCH_ASSOC));
+    public function byId($id) {
+        $stmt = $this->pdo->prepare("select * from menu where id = :id ");
+        $stmt->execute(array('id' => $id));
+        return $this->getItem($stmt);
     }
 
     public static function createFromData($pdo, $data) {
@@ -39,36 +31,43 @@ class MenuModel {
         }
         $this->items = self::getItems($this->pdo, $this->id);
     }
-    public function toJson(){
+
+    public function toJson() {
         $collector = array();
-        foreach($this->items as $item) {
+        foreach ($this->items as $item) {
             $collector[] = array(
-                'id'=>$item['id'],
+                'id' => $item['id'],
                 'text' => $item['title'],
                 'parent' => $item['parent'] ? $item['parent'] : '#',
-                'data'=> array(
-                    'slug'=>$item['slug'],
+                'data' => array(
+                    'slug' => $item['slug'],
                     'article_id' => $item['article_id']
                 )
             );
         }
         return json_encode($collector);
     }
-    public static function getItems($pdo, $id = 1) {
-        $res = $pdo->query("select * from menu_items where menu_id = $id order by parent, sort_index", \PDO::FETCH_ASSOC);
-        
-        $items = self::parseItems($res);
-        return $items;
+
+    public function getItems() {
+        if (!isset($this->items)) {
+            $this->pullItems();
+        }
+
+        return $this->items;
     }
-    
+
+    protected function pullItems() {
+        $res = $this->pdo->query("select * from menu_items where menu_id = {$this->id} order by parent, sort_index", \PDO::FETCH_ASSOC);        
+        $this->items = $this->parseItems($res);
+    }
+
     public function parseItems($res) {
-        return self::parseTree($res);
+        return $this->parseTree($res);
     }
-    
-    public function parseTree($res){
+
+    public function parseTree($res) {
         $items = array();
-         foreach ($res as $row) {
-           
+        foreach ($res as $row) {
             if ($row['parent']) {
                 $p = $row['parent'];
                 if (!isset($items[$p]['items'])) {
@@ -79,8 +78,10 @@ class MenuModel {
                 $items[$row['id']] = $row;
             }
         }
+        
         return $items;
     }
+
     public function parseFlat($res) {
         $items = array();
         foreach ($res as $row) {
@@ -88,11 +89,10 @@ class MenuModel {
         }
         return $items;
     }
-    
-    public function getNextId(){
+
+    public function getNextId() {
         $res = $this->pdo->query("select max(id) +1 as cnt from menu_items")->fetch();
         return $res['cnt'];
     }
 
 }
-

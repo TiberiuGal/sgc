@@ -17,7 +17,7 @@ class CmsController {
         $news = $app['models']->getModel('ArticleModel')->getNews();
         return $app['twig']->render('article.twig', array(
                     'article' => $article,
-                    'menu' => $app['menu']->getData(),
+                    'menu' => $app['models']->Menu->byId(1),
                     'news' => $news
         ));
     }

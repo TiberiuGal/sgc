@@ -6,8 +6,7 @@ class ArticleModel {
 
     use ModelTrait;
 
-    protected $data;
-    protected $pdo;
+   
     public $id = 0;
     public $title;
     public $slug;

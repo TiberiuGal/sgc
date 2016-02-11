@@ -13,13 +13,16 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController {
 
     public function indexAction(Request $request, Application $app) {
-        $data = $app['menu']->getData();
+        $menu = $app['models']->Menu->byId(1);
+        
         $carousel = $app['carousel'];
+        
         $news = $app['models']->getModel('ArticleModel')->getNews();
-        $article = $app['models']->getModel('ArticleModel')->getBySlug($app['db.pdo'], '/');
+        $article = $app['models']->Article->getBySlug('/');
+        
         return $app['twig']->render('index.twig', array(
                     'carousel' => $carousel->getData(),
-                    'menu' => $data,
+                    'menu' => $menu,
                     'news' => $news,
                     'article' => $article
         ));

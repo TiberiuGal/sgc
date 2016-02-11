@@ -73,13 +73,8 @@ class AdminController {
     }
 
     public function editMenuAction($menuId, Request $request, Application $app) {
-        $pdo = $app['db.pdo'];
-        $menu = FlatMenuModel::getById($pdo, $menuId);
-        /* $res = $pdo->query("select a.* from articles a join articles_categories i on a.id = i.article_id where i.category_id = 1 ");
-          $articles = array();
-          foreach ($res as $row) {
-          $articles[] = new ArticleModel($pdo, $row);
-          } */
+        
+        $menu = $app['models']->FlatMenu->byId($menuId);
 
         return $app['twig']->render('admin/menu_edit.twig', array(
                     'jsFiles' => array('/js/jstree/jstree.js', '/js/jstree/jstree.dnd.js'),
