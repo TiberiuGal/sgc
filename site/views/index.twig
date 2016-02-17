@@ -2,7 +2,10 @@
 
 {% block content %}
 
-     <h2>{{article.title}}</h2>
+    {% if carousel is defined  %}
+        {{ include('layers/carousel.twig') }}
+    {% endif %}
+    <h2>{{article.title}}</h2>
     <article>
         {{article.body|raw}}
     </article>

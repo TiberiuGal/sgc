@@ -24,7 +24,8 @@ class IndexController {
                     'carousel' => $carousel->getData(),
                     'menu' => $menu,
                     'news' => $news,
-                    'article' => $article
+                    'article' => $article,
+                    'partners' => $app['configs']->getData()['partners']
         ));
     }
 

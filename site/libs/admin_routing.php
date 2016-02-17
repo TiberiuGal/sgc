@@ -16,7 +16,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 ));
 
 
-$app->get('/info', function(){phpinfo();});
+$app->get('/admin/info', function(){phpinfo();});
 $app->get('/admin/', 'controllers\AdminController::indexAction');
 $app->post('/admin/encode_password', 'controllers\AdminController::encodePasswordAction');
 $app->get('/admin/articles', 'controllers\AdminController::articlesAction');
@@ -31,4 +31,6 @@ $app->get('/admin/resources', 'controllers\AdminController::resourcesAction');
 $app->get('/admin/resource/{resourceId}', 'controllers\AdminController::resourceAction');
 $app->delete('/admin/resource/{resourceId}', 'controllers\AdminController::deleteResourceAction');
 $app->post('/admin/resource/{resourceId}', 'controllers\AdminController::saveResourceAction');
+$app->get('/admin/configs', 'controllers\AdminController::editConfigsAction');
+$app->post('/admin/configs', 'controllers\AdminController::updateConfigsAction');
 

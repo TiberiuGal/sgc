@@ -60,4 +60,13 @@ class PluginService {
                     'resources' => $model->getListing()
         ));
     }
+    
+    protected function carousel() {
+        
+        $this->app['carousel'];
+        $model = $modelService->getModel('ResourceModel');
+        return $this->app['twig']->render('/layers/carousel.twig', array(
+                    'carousel' => $model->getListing()
+        ));
+    }
 }

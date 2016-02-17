@@ -9,7 +9,7 @@
     </head>
     <body>
 
-        <form class="form-inline" id="upl" name="upl" action="/admin/images" method="post" enctype="multipart/form-data" target="upload_target" onsubmit="jbImagesDialog.inProgress();">
+        <form class="form-inline" id="upl" name="upl" action="/index.php/admin/images" method="post" enctype="multipart/form-data" target="upload_target" onsubmit="jbImagesDialog.inProgress();">
             <input type="hidden" name="app_id" id="app_id" />
             <div id="upload_in_progress" class="upload_infobar"><img src="img/spinner.gif" width="16" height="16" class="spinner">Upload in progress&hellip; <div id="upload_additional_info"></div></div>
             <div id="upload_infobar" class="upload_infobar"></div>	
@@ -30,7 +30,7 @@
         </form>
         
         
-        <iframe id="upload_target" name="upload_target" src="/admin/images"></iframe>
+        <iframe id="upload_target" name="upload_target" src="/index.php/admin/images"></iframe>
 
         
     </body>

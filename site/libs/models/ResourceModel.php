@@ -87,5 +87,10 @@ class ResourceModel {
             $insertStmt->execute(array('resource_id' => $id, 'media_type_id' => $key));
         }
     }
+    
+    public function byMediaType($mediaTypeId){
+        $stmt = $this->pdo->query("select r.* from resources r join resource_media i on r.id = i.resource_id and i.media_type_id = $mediaTypeId ");
+        return $this->getList($stmt);
+    }
 
 }

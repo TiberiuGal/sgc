@@ -18,7 +18,8 @@ class CmsController {
         return $app['twig']->render('article.twig', array(
                     'article' => $article,
                     'menu' => $app['models']->Menu->byId(1),
-                    'news' => $news
+                    'news' => $news,
+                    'partners' => $app['configs']->getData()['partners']
         ));
     }
     

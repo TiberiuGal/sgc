@@ -2,12 +2,10 @@
 
 {% block content %}
 
-
-
     <table class="table table-striped table-hover">
 
         <thead >
-            <tr><th colspan="4">lista articole:</th><th><a href="/admin/article/0" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-plus"></i> | adauga pagina noua</a></th></tr>
+            <tr><th colspan="4">lista articole:</th><th><a href="/index.php/admin/article/0" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-plus"></i> | adauga pagina noua</a></th></tr>
             <tr>
                 <th width="20">id</th>
                 <th width="200">titlu</th>
@@ -27,12 +25,13 @@
                     <td>{{article.excerpt}}</td>
                     <td>{{article.categories | join(', ')}}</td>
                     <td>
-                        <a href="/admin/article/{{article.id}}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i> | edit </a>
-                        <a href="{{article.slug}}" target="_blank" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> | vezi in site </a>
-                        <a href="/admin/article/{{article.id}}/add_to_menu" class="btn btn-warning btn-xs" title="adauga pagina in meniu"><i class="glyphicon glyphicon-pushpin"></i> | meniu </a>
+                        <a href="/index.php/admin/article/{{article.id}}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i> | edit </a>
+                        <a href="/index.php{{article.slug}}" target="_blank" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> | vezi in site </a>
+                        <a href="/index.php/admin/article/{{article.id}}/add_to_menu" class="btn btn-warning btn-xs" title="adauga pagina in meniu"><i class="glyphicon glyphicon-pushpin"></i> | meniu </a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+        
 {% endblock %}                

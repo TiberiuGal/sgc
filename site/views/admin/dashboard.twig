@@ -7,7 +7,7 @@
             <p><b>Admin password generator</b></p>
             <p>parola de access in contul de administrare e salvata in .htaccess intr-un format encodat. <br />
             poti folosi tool-ul de mai jos pentru a genera o noua parola, pe care sa o inlocuiesti in fisierul .htaccess</p>
-            <form action="/admin/encode_password" method="post">
+            <form action="/index.php/admin/encode_password" method="post">
                 <input type="text" name="password" value="{{password}}" placeholder="parola" />
                 <input type="submit" value="encode password" />
             </form>

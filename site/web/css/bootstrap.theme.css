@@ -30,9 +30,8 @@ header {
 .carousel-caption {
 
     font-family:'Merienda One', cursive;
-    font-size: 16px;
     position: absolute;
-    text-align: left;
+    text-align: center;
     vertical-align: middle;
     bottom: 0;
     right: 0;
@@ -46,12 +45,16 @@ header {
 
     display: block;
     color: #fff;
-    font-size: 47px;
-    padding: 290px 100px 120px 100px;
-    vertical-align: middle;
+    font-size: 2em;
+    position: absolute;
+    bottom: 10px;
+
+
 }
 .carousel-indicators {
     bottom: 10px;
+    left: 50px;
+
 }
 
 p.best_offers {

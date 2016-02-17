@@ -93,7 +93,7 @@
                 var nodeData = {'data': nodes};
                 nodeData.deletes = gv_deletes;
                 $.ajax({
-                    'url': '/admin/menu/' + menuId,
+                    'url': '/index.php/admin/menu/' + menuId,
                     'method': 'post',
                     'data': nodeData,
                     "success": function (data) {

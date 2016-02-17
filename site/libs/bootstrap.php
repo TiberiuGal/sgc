@@ -2,7 +2,6 @@
 
 $app['debug'] = isset($_SERVER['PHP_WEB_DEBUG_ENABLED']) ? $_SERVER['PHP_WEB_DEBUG_ENABLED'] : true;
 
-
 $app['mailer'] = $app->share(function () {
     return new \PHPMailer();
 });
@@ -25,6 +24,10 @@ $app['db.pdo'] = $app->share(function() {
 
     return $pdo;
 });
+$app['configs'] = $app->share(function($app) {
+    return new \services\ConfigService($app['db.pdo']);
+});
+
 $app['models'] = $app->share(function($app) {
     return new \services\ModelService($app['db.pdo']);
 });

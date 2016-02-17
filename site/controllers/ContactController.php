@@ -15,7 +15,8 @@ class ContactController {
         return $app['twig']->render('contact.twig', array(
                     'message' => $message,
                     'menu' => $app['models']->Menu->byId(1),
-                    'news' => $news
+                    'news' => $news,
+                    'partners' => $app['configs']->getData()['partners']
         ));
     }
 

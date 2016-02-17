@@ -4,7 +4,7 @@
 {% block content %}
     <div class="row container-fluid">
         <div class="col-sm-9 article admin_form">
-            <form action="/admin/article/{{article.id}}" method="POST" >
+            <form action="/index.php/admin/article/{{article.id}}" method="POST" >
                 <fieldset class="article_meta"><legend>articol</legend>
                     <input type="hidden" name="article[id]" id="article_id" value="{{article.id}}" /> <br />
                     <label for="article_title">Titlu</label>
@@ -58,8 +58,8 @@
                 <li style="list-style-type: none;"> <hr /> </li>
                 <li style="list-style-type: none">legaturi:</li>
 
-                <li><a href="/admin/articles" class="btn btn-default btn-xs">Lista articole</a></li>
-                <li><a href="{{article.slug}}" target="_blank" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> | vezi in site </a></li>
+                <li><a href="/index.php/admin/articles" class="btn btn-default btn-xs">Lista articole</a></li>
+                <li><a href="/index.php{{article.slug}}" target="_blank" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> | vezi in site </a></li>
             </ul>
 
         </div>

@@ -33,7 +33,7 @@ class AdminController {
 
     public function encodePasswordAction(Request $request, Application $app) {
         $request->getSession()->set('password', $request->get('password'));
-        return $app->redirect('/admin/');
+        return $app->redirect('/index.php/admin/');
     }
 
     public function articlesAction(Request $request, Application $app) {
@@ -69,11 +69,11 @@ class AdminController {
         $pdo = $app['db.pdo'];
         $article = ArticleModel::createFromData($pdo, $request->request->get('article'));
         $article->save();
-        return $app->redirect('/admin/article/' . $article->id);
+        return $app->redirect('/index.php/admin/article/' . $article->id);
     }
 
     public function editMenuAction($menuId, Request $request, Application $app) {
-        
+
         $menu = $app['models']->FlatMenu->byId($menuId);
 
         return $app['twig']->render('admin/menu_edit.twig', array(
@@ -164,7 +164,7 @@ class AdminController {
         ));
 
 
-        return $app->redirect('/admin/menu/' . $menuId);
+        return $app->redirect('/index.php/admin/menu/' . $menuId);
     }
 
     public function uploadResourceAction(Request $request, Application $app) {
@@ -192,8 +192,8 @@ class AdminController {
         ));
 
         return $twig->render('admin/resources.twig', array(
-            'jsFiles' => array('/js/admin.js'),
-            'resources' => $resources
+                    'jsFiles' => array('/js/admin.js'),
+                    'resources' => $resources
         ));
     }
 
@@ -218,7 +218,7 @@ class AdminController {
         if ($request->isXmlHttpRequest()) {
             return 'ok';
         }
-        return $app->redirect('/admin/resources');
+        return $app->redirect('/index.php/admin/resources');
     }
 
     public function saveResourceAction($resourceId, Request $request, Application $app) {
@@ -240,7 +240,25 @@ class AdminController {
 
         $resourceObject->save($params);
 
-        return $app->redirect('/admin/resources');
+        return $app->redirect('/index.php/admin/resources');
+    }
+
+    public function editConfigsAction(Application $app) {
+        $pdo = $app['db.pdo'];
+        $configs = $pdo->query("select * from site_configs where editable = 1")->fetchAll();
+        return $app['twig']->render('admin/configs.twig', array(
+                    'configs' => $configs
+                ))
+        ;
+    }
+    public function updateConfigsAction(Request $request, Application $app) {
+        $pdo = $app['db.pdo'];
+        $stmt = $pdo->prepare("update site_configs set key_value = :val where id = :id ");
+        $configs = $request->get('config_value');
+        foreach($configs as $id=>$val) {
+            $stmt->execute(array('id' => $id, 'val'=>$val));
+        }
+        return $app->redirect('/index.php/admin/configs');
     }
 
 }
