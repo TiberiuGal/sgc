@@ -1,0 +1,38 @@
+
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Atentie</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Esti sigur ca vrei sa stergi <span id="object_name_placeholder"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Nu, Renunt</button>
+                    <button type="button" class="btn btn-danger">Da, Sterge</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            $('.jst_confirm').click(function () {
+                var actionUrl = $(this).attr('data-link');
+                var objectName = $(this).attr('data-object-name') ? $(this).attr('data-object-name') : 'acest element';
+                $('#object_name_placeholder').text(objectName);
+                $('.modal .btn-danger').unbind('click').click(function () {
+                    $.ajax({
+                        url: actionUrl,
+                        type: 'DELETE',
+                        success: function (result) {
+                            window.location.reload();
+                        }
+                    });
+                });
+                $('.modal').modal('show');
+            });
+        });
+    </script>

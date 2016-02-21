@@ -18,8 +18,9 @@
 
                     <p>Puteti sa ne contactati prin telefon:<br>
                     <address>
-                        <p > <span class="glyphicon glyphicon-earphone"> 07XX-XXX.XXX</span>  </p>
-                        <p > <span class="glyphicon glyphicon-earphone"> 07XX-XXX.XXX</span> </p>
+                        {%for phone in phones %}
+                            <p > <span class="glyphicon glyphicon-earphone"> {{phone|trim}}</span>  </p>
+                        {%endfor%}
                     </address>
                     </p>
 

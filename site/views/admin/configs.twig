@@ -1,29 +1,30 @@
 {% extends "admin.layout.twig" %}
 
 {% block content %}
+    <div class="admin_form">
+        <form action="" method="POST">
 
-    <form action="" method="POST">
+            <table class="table table-striped table-hover">
 
-        <table class="table table-striped table-hover">
-
-            <thead >
-                <tr><th colspan="2">lista configurari:</th></tr>
-                <tr>
-                    <th width="200">cheie</th>
-
-                    <th width="400">valoare</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for config in configs %}
+                <thead >
+                    <tr><th colspan="2">lista configurari:</th></tr>
                     <tr>
-                        <td><input type="text" value="{{config.key_name}}" readonly="readonly" /></td>
-                        <td><input type="text" name="config_value[{{config.id}}]" value="{{config.key_value}}" style="width:100%" /></td>
-                    </tr>
-                {% endfor %}
+                        <th width="200">cheie</th>
 
-            </tbody>
-        </table>
-        <input type="submit" value="Salveaza" class="btn btn-success" />
-    </form>
+                        <th width="400">valoare</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for config in configs %}
+                        <tr>
+                            <td><input type="text" value="{{config.key_name}}" readonly="readonly" /></td>
+                            <td><input type="text" name="config_value[{{config.id}}]" value="{{config.key_value}}" style="width:100%" /></td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+            <input type="submit" value="Salveaza" class="btn btn-success" />
+        </form>
+    </div>
 {% endblock %}

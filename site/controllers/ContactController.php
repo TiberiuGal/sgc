@@ -12,18 +12,19 @@ class ContactController {
         unset($_SESSION['message_sent']);
         
         $news = $app['models']->getModel('ArticleModel')->getNews();
+        $phones = explode(',' , $app['configs']->getData()['contact_phone']) ;
         return $app['twig']->render('contact.twig', array(
                     'message' => $message,
                     'menu' => $app['models']->Menu->byId(1),
                     'news' => $news,
-                    'partners' => $app['configs']->getData()['partners']
+                    'phones' => $phones
         ));
     }
 
     public function contactSentAction(Request $request, Application $app) {
 
         $data = $request->get('contact_form');
-        $contactEmail = 'office@scoalachristiana.ro';
+        $contactEmail = 'secretariat@scoalachristiana.ro';
         $message = sprintf('
             Salut,
                     Ai primit un mesaj prin intermediul formularului de contact.

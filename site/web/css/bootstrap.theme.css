@@ -1,6 +1,11 @@
 body {
     background-color: #FAF7EE;
 }
+body>.container {
+    background: #FFFFFF;
+    border: 1px solid #8B1B13;
+    padding-bottom: 20px;
+}
 
 header .container-fluid {
     height: 80px;
@@ -193,4 +198,9 @@ p.best_offers {
 }
 .main_menu ul {
     margin-bottom: 4px;
+}
+
+
+footer {
+    color: #8B1B13;
 }

@@ -4,25 +4,16 @@ namespace services;
 class CarouselService {
     
     protected static $data = array(
-      array(
-          'img_src'=> '/img/carousel/carousel-1.jpg',
-          'img_alt' => 'lorem ipsum',
-          'title' => 'Doamne, ajuta-ne sa gasim calea'
-          )  ,
-      array(
-          'img_src'=> '/img/carousel/carousel-2.jpg',
-          'img_alt' => 'lorem ipsum',
-          'title' => 'Speranta, Iubire, Putere'
-          )  ,
+      
       array(
           'img_src'=> '/img/carousel/carousel-3.jpg',
-          'img_alt' => 'lorem ipsum',
-          'title' => 'Fericirea copiilor nostri'
+          'img_alt' => '',
+          'title' => ''
           )  ,
       array(
           'img_src'=> '/img/carousel/carousel-4.jpg',
-          'img_alt' => 'lorem ipsum',
-          'title' => '... prin educatie'
+          'img_alt' => '',
+          'title' => ''
           )  ,        
         
         );
