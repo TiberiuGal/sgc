@@ -52,23 +52,25 @@ class ResourceModel {
         $sqlString = " resources set ";
         $mediaTypes = $params['media'];
         unset($params['media']);
-
+        $id = $params['id'];
+        unset($params['id']);
+        
         $keys = array_keys($params);
         $sqlString .= implode(' , ', array_map(function($key) {
                     return "{$key} = :{$key}";
                 }, $keys));
 
-        if ($params['id']) {
+       
+        if ($id) {
             $sqlString = 'UPDATE ' . $sqlString . ' where id = :id ';
-            $id = $params['id'];
-        } else {
-            unset($params['id']);
+            $params['id'] = $id;
+        } else {            
             $sqlString = 'INSERT into ' . $sqlString;
         }
 
         $stmt = $this->pdo->prepare($sqlString);
         $stmt->execute($params);
-        if (!isset($id)) {
+        if (!$id) {
             $id = $this->pdo->lastInsertId();
             $this->updateMediaTypes($id, $mediaTypes, false);
         } else {

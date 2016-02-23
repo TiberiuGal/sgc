@@ -24,7 +24,9 @@ class ContactController {
     public function contactSentAction(Request $request, Application $app) {
 
         $data = $request->get('contact_form');
-        $contactEmail = 'secretariat@scoalachristiana.ro';
+        $configData = $app['configs']->getData();
+        $contactEmails = $configData['contact_phone'] ? explode(',' ,  $configData['contact_phone']) : array('secretariat@scoalachristiana.ro') ;
+        
         $message = sprintf('
             Salut,
                     Ai primit un mesaj prin intermediul formularului de contact.
@@ -34,14 +36,16 @@ class ContactController {
         $mailer = $app['mailer'];
         $mailer->isSMTP();
 
-        $mailer->Host = 'host';
-        $mailer->Username = '';
-        $mailer->Password = '';
-        $mailer->SMTPSecure = 'ssl';
-        $mailer->Port = 465;
-        $mailer->setFrom('office@scoalachristiana.ro');
+        $mailer->Host = 'localhost';
+        //$mailer->Username = '';
+        //$mailer->Password = '';
+        //$mailer->SMTPSecure = 'ssl';
+        $mailer->Port = 25;
+        $mailer->setFrom('no-reply@scoalachristiana.ro');
         $mailer->addReplyTo($data['email']);
-        $mailer->addAddress($contactEmail);
+        foreach($contactEmails as $email) {
+            $mailer->addAddress($email);
+        }
         $mailer->Subject = 'Formular contact ';
         $mailer->Body = $message;
         $mailer->send();
