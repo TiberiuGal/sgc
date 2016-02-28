@@ -64,23 +64,41 @@ class MenuModel {
     public function parseItems($res) {
         return $this->parseTree($res);
     }
-
     public function parseTree($res) {
+    
         $items = array();
         foreach ($res as $row) {
-            if ($row['parent']) {
-                $p = $row['parent'];
-                if (!isset($items[$p]['items'])) {
-                    $items[$p]['items'] = array();
+            $items[$row['id']] = $row;
+        }
+        return $this->arrayToTree($items, 0);      
+    }
+    
+    function print_list($array, $parent=0) {
+        print "<ul>";
+        foreach ($array as $row) {
+            if ($row['parent']== $parent) {
+                print "<li>${row['title']}";
+                $this->print_list($array, $row['id']);  # recurse
+                print "</li>";
+        }   }
+        print "</ul>";
+    }
+    function arrayToTree($input, $parent = 0) {
+        $ret = array();
+        foreach($input as $row) {
+            if($row['parent'] == $parent) {                
+                $subitems = $this->arrayToTree($input, $row['id']);
+                if( count($subitems)) {
+                    $row['items'] = $subitems;
                 }
-                $items[$p]['items'][$row['id']] = $row;
-            } else {
-                $items[$row['id']] = $row;
+                $ret[] = $row;
             }
         }
+        return $ret;
         
-        return $items;
     }
+
+
 
     public function parseFlat($res) {
         $items = array();

@@ -22,6 +22,7 @@ $app->post('/admin/encode_password', 'controllers\AdminController::encodePasswor
 $app->get('/admin/articles', 'controllers\AdminController::articlesAction');
 $app->get('/admin/article/{articleId}', 'controllers\AdminController::articleAction');
 $app->post('/admin/article/{articleId}', 'controllers\AdminController::saveArticleAction');
+$app->delete('/admin/article/{articleId}', 'controllers\AdminController::deleteArticleAction');
 $app->get('/admin/article/{articleId}/{action}', 'controllers\AdminController::updateArticleAction');
 $app->get('/admin/menu/{menuId}', 'controllers\AdminController::editMenuAction');
 $app->post('/admin/menu/{menuId}', 'controllers\AdminController::menuSaveAction');

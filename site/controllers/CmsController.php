@@ -4,25 +4,27 @@ namespace controllers;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
+use controllers\base\FrontController;
 
-class CmsController {
+class CmsController extends FrontController {
 
     public function pageAction($url, Request $request, Application $app) {
-        
+
         $articleModel = $app['models']->getModel('ArticleModel');
-        
-        $article = $articleModel->getBySlugOrNotFound($url);
-        $app['pluginService']->parseBodyPlugins( $article->body );
-        
+        $menu = $app['models']->Menu->byId(1);
         $news = $app['models']->getModel('ArticleModel')->getNews();
-        return $app['twig']->render('article.twig', array(
-                    'article' => $article,
-                    'menu' => $app['models']->Menu->byId(1),
-                    'news' => $news,
-                    'partners' => $app['configs']->getData()['partners']
-        ));
+
+        $article = $articleModel->getBySlugOrNotFound($url);
+        $app['pluginService']->parseBodyPlugins($article->body);
+        $context = $this->defaults['twigContext'];
+
+        $context['menu'] = $menu;
+        $context['news'] = $news;
+        $context['article'] = $article;
+
+
+        $news = $app['models']->getModel('ArticleModel')->getNews();
+        return $app['twig']->render('article.twig', $context);
     }
-    
-    
 
 }

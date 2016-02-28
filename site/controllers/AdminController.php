@@ -71,6 +71,16 @@ class AdminController {
         $article->save();
         return $app->redirect('/index.php/admin/article/' . $article->id);
     }
+    
+    public function deleteArticleAction($articleId, Application $app) {
+        $app['models']->Article->remove($articleId);
+        
+        if ($request->isXmlHttpRequest()) {
+            return 'ok';
+        }
+
+        return $app->redirect('/index.php/admin/articles');
+    }
 
     public function editMenuAction($menuId, Request $request, Application $app) {
 

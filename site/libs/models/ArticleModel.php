@@ -55,6 +55,10 @@ class ArticleModel {
         return $obj;
     }
     
+    public function remove($articleId){
+        $this->pdo->exec("delete from articles where id=$articleId");
+        
+    }
 
     public function __construct($pdo = null, $data = null) {
         $this->pdo = $pdo;

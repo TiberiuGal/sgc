@@ -1,9 +1,14 @@
+body, html {height: 100%}
 body {
     background-color: #8B1B13;
+    
 }
 body>.container {
     background: #FFFFFF;
     padding-bottom: 20px;
+    overflow: auto;
+    height: 100%;
+    overflow-x: hidden;
 }
 
 header .container-fluid {
@@ -202,4 +207,6 @@ p.best_offers {
 
 footer {
     color: #8B1B13;
+    position: absolute;
+    bottom: 10px;
 }
