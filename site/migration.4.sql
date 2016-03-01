@@ -1,3 +1,4 @@
+ALTER TABLE `articles` ENGINE=MYISAM;
 
 CREATE FULLTEXT INDEX search_index
 ON articles(title, body, excerpt);

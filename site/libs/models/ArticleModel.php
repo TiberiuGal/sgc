@@ -159,5 +159,14 @@ class ArticleModel {
 
         return $this->getList($stmt);
     }
+    
+    public function search($query) {
+        $quotedQueryString = $this->pdo->quote($query);
+        $stmt = $this->pdo->prepare("SELECT * FROM articles "
+                . " WHERE MATCH(title, excerpt, body) "
+                . " AGAINST($quotedQueryString IN NATURAL LANGUAGE MODE);");
+        $stmt->execute();
+        return $this->getList($stmt);
+    }
 
 }

@@ -22,9 +22,23 @@ class CmsController extends FrontController {
         $context['news'] = $news;
         $context['article'] = $article;
 
-
-        $news = $app['models']->getModel('ArticleModel')->getNews();
+        
         return $app['twig']->render('article.twig', $context);
+    }
+
+    public function searchAction(Request $request, Application $app) {
+        $articles = $app['models']->Article->search($request->get('q'));        
+        
+        $menu = $app['models']->Menu->byId(1);
+        $news = $app['models']->getModel('ArticleModel')->getNews();
+        
+        $context = $this->defaults['twigContext'];
+
+        $context['menu'] = $menu;
+        $context['news'] = $news;
+        $context['articles'] = $articles;
+
+        return $app['twig']->render('cautare.twig', $context);
     }
 
 }

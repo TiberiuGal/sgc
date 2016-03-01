@@ -37,6 +37,11 @@
 
             <div class="container-fluid row">
                 <div class="col-sm-3">
+                    <div>
+                        <form method="GET" action="/cautare">
+                            <input type="text" name="q" /><button typq="submit">cauta</button>
+                        </form>
+                    </div>
                     <div class="main_menu">
                     {{ include('layers/menu.twig') }}
                 </div>
