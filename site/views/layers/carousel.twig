@@ -12,9 +12,9 @@
   <div class="carousel-inner" role="listbox">
       {% for  elem in carousel %}
     <div class="item {{ loop.index == 1  ? 'active' :'' }}">
-      <img src="{{ elem.img_src}}" alt="{{ elem.img_alt }}">
+      <img src="/resources/{{ elem.file_name}}" alt="{{ elem.title }}">
       <div class="carousel-caption">
-          <span>{{ elem.title }}</span>
+          <span>{{ elem.description }}</span>
       </div>
     </div>
     {% endfor %}

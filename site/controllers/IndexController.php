@@ -14,13 +14,14 @@ use controllers\base\FrontController;
 class IndexController extends FrontController{
 
     public function indexAction(Request $request, Application $app) {
-        $carousel = $app['carousel'];
+        $carousel = $app['models']->Resource->byMediaType(2);
+        
         $menu = $app['models']->Menu->byId(1);
         $news = $app['models']->getModel('ArticleModel')->getNews();
         $article = $app['models']->Article->getBySlug('/');
 
         $context = $this->defaults['twigContext'];
-        $context['carousel'] = $carousel->getData();
+        $context['carousel'] = $carousel;
         $context['menu'] = $menu;
         $context['news'] = $news;
         $context['article'] = $article;
