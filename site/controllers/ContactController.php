@@ -32,7 +32,7 @@ class ContactController extends FrontController {
 
         $data = $request->get('contact_form');
         $configData = $app['configs']->getData();
-        $contactEmails = $configData['contact_phone'] ? explode(',', $configData['contact_phone']) : array('secretariat@scoalachristiana.ro');
+        $contactEmails = $configData['contact_email'] ? explode(',', $configData['contact_email']) : array('secretariat@scoalachristiana.ro');
 
         $message = sprintf('
             Salut,
