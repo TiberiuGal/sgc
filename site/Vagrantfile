@@ -1,6 +1,10 @@
 Vagrant.configure("2") do |config|
-    config.vm.box = "hashicorp/precise32"
+    config.vm.box = "ubuntu/trusty64"
   
+    config.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+    end
+
     config.vm.define "sgc" do |sgc|
   
         sgc.vm.hostname = "sgc.home"

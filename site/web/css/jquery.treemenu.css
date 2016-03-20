@@ -20,8 +20,7 @@ li.tree-closed > .toggler:hover {
     cursor: pointer;
 }
 
-li.tree-empty > .toggler { color: #aaa; }
-li.tree-empty > span.toggler:before { content: "\2212"; }
+
 li.tree-closed > span.toggler:before { content: "+"; }
 li.tree-opened > span.toggler:before { content: "\2212"; }
 

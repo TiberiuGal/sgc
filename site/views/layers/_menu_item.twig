@@ -1,12 +1,12 @@
 <ul>
     {% for menuItem in menu.items %} 
         <li >
-
-            <a href="{{menuItem.slug}}">{{menuItem.title}}</a>
+            
+            <a href="{{menuItem.slug}}" {%if menuItem.slug == activePage %} class="active" {%endif%}>{{menuItem.title}}</a>
             
             {% if menuItem.items is defined %}
 
-                {% include "layers/_menu_item.twig" with {'menu': menuItem}  only %}
+                {% include "layers/_menu_item.twig" with {'menu': menuItem, 'activePage': activePage}  only %}
 
             {%endif%}
 
