@@ -1,7 +1,7 @@
 body, html {height: 100%}
 body {
     background-color: #8B1B13;
-    
+
 }
 body>.container {
     background: #FFFFFF;
@@ -47,7 +47,7 @@ header {
     left: auto;
     width: 50%;
     height: 100%;
-    background: rgba(127,53,12,0.6);
+/*    background: rgba(127,53,12,0.6); */
 
 }
 .carousel-caption span {
@@ -103,7 +103,7 @@ p.best_offers {
     font-style: normal;
     font-family: 'Oswald', sans-serif;
     color: #27b6de;
-    font-size: 14px;  
+    font-size: 14px;
 }
 
 .spacing-bottom-small {
@@ -172,7 +172,7 @@ p.best_offers {
 .price_big {
     font-size: 36px;
     font-family: Robot, sans-serif;
-    text-align: center;  
+    text-align: center;
     margin: 20px;
     color: #008080;
 }

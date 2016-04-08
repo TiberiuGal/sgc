@@ -78,7 +78,7 @@ class ResourceModel {
         }
     }
 
-    protected function updateMediaTypes($id, $mediaTypes, $deleteOldMediaTypes = true) {
+    protected function updateMediaTypes($id, $mediaTypes, $deleteOldMediaTypes = true){
         if ($deleteOldMediaTypes) {
             $delStmt = $this->pdo->prepare("delete from resource_media where resource_id = :id ");
             $delStmt->execute(array('id' => $id));
