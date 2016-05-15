@@ -70,6 +70,7 @@ class ArticleModel {
     }
 
     public function hasCategory($categoryId) {
+        if(!is_array($this->categories)) return false;
         return array_key_exists($categoryId, $this->categories);
     }
 

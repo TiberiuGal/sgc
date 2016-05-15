@@ -72,7 +72,7 @@ class PluginService
 
         $modelService = $this->app['models'];
         $model = $modelService->getModel('ResourceModel');
-        return $this->app['twig']->render('/layers/carousel.twig', array(
+        return $this->app['twig']->render('/layers/slick-carousel.twig', array(
             'carousel' => $model->byMediaType($mediaTypeId),
         ));
     }

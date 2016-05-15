@@ -2,7 +2,7 @@
     {% for menuItem in menu.items %} 
         <li >
             
-            <a href="{{menuItem.slug}}" {%if menuItem.slug == activePage %} class="active" {%endif%}>{{menuItem.title}}</a>
+            <a href="{{menuItem.slug}}" {%if menuItem.slug == activePage %} class="active" {%endif%}><p>{{menuItem.title}}</p></a>
             
             {% if menuItem.items is defined %}
 

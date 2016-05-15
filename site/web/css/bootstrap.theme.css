@@ -1,3 +1,8 @@
+@font-face {
+font-family: Trajan Pro;
+src: url("./fonts/trajanpro-regular.otf") format("opentype");
+}
+
 body, html {height: 100%}
 body {
     background-color: #8B1B13;
@@ -6,18 +11,26 @@ body {
 body>.container {
     background: #FFFFFF;
     padding-bottom: 20px;
-    overflow: auto;
     height: 100%;
+    overflow: hidden;
+}
+.scroll_container {
+    height: 100%;    
+}
+.scroll_content {
+    overflow: auto;
     overflow-x: hidden;
 }
-
 header .container-fluid {
     height: 80px;
 }
 header {
     margin-bottom: 30px;
 }
-
+hr.header_border {
+    border-top: 1px solid #8B1B13;
+    margin:0px;
+}
 .navbar-brand {
     margin: 4px 10px;
 }
@@ -47,7 +60,7 @@ header {
     left: auto;
     width: 50%;
     height: 100%;
-/*    background: rgba(127,53,12,0.6); */
+    /*    background: rgba(127,53,12,0.6); */
 
 }
 .carousel-caption span {
@@ -191,11 +204,17 @@ p.best_offers {
 
 .main_menu a {
     color: #8B1B13;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
+    font-family: Trajan Pro;
+    font-size: 14px;
     font-weight: bold;
 }
-
+.main_menu a>p {
+    margin:0px;
+    display: inline-block
+}
+.main_menu a>p::first-letter { 
+    font-size: 18px;
+}
 .main_menu li {
     list-style-type: none;
     padding-top: 5px;

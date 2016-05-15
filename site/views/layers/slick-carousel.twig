@@ -1,0 +1,41 @@
+<div class="slick-carousel" >
+
+    <div class="slider-for">
+    {% for  elem in carousel %}
+        <div class="item {{ loop.index == 1  ? 'active' :'' }}">
+            <img src="/resources/{{ elem.file_name}}" width="618" alt="{{ elem.title }}">      
+        </div>
+    {% endfor %}
+    </div>
+    <div class="slider-nav">
+    {% for  elem in carousel %}
+        <div class="item {{ loop.index == 1  ? 'active' :'' }}">
+            <img src="/resources/{{ elem.file_name}}" width="197" alt="{{ elem.title }}">      
+        </div>
+    {% endfor %}
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.slider-for').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            
+            fade: true,
+            asNavFor: '.slider-nav'
+        });
+        $('.slider-nav').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            
+            centerMode: true,
+            focusOnSelect: true
+        });
+    });
+
+</script>
